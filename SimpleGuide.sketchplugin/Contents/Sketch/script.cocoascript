@@ -1,0 +1,29 @@
+@import "library.cocoascript";
+
+var onRun = function(context) {
+  // Context is a dictionary containing a reference to the document, 
+  // the current selection, the plugin, curren URL and more.
+  
+  var doc = context.document;                // the current document (MSDocument)
+  var plugin = context.plugin;          // the plugin (MSPluginBundle)
+  var page = [doc currentPage];         // the current page (MSPage)
+  
+  // create a new group to contain the new layers (MSLayerGroup)
+  var group = SketchLib.addLayerGroup(page, {"name": [plugin name] });
+
+  // create an image layer using a resource from the plugin bundle's Contents/Resouces folder
+  var imageLayer = SketchLib.addImageLayer(group, {"name": "World", "url": [plugin urlForResourceNamed:"World.pdf"]})
+  // center on the canvas
+  SketchLib.util.centerLayer(imageLayer);
+
+  // create a text layer using the plugin's name
+  var textLayer = SketchLib.addTextLayer(group, {"text": [plugin name], "fontSize": 96});
+  // center on the canvas
+  SketchLib.util.centerLayer(textLayer);
+
+  // resize the group to contain its children
+  [group resizeRoot:true];
+
+  // center the view on our new group
+  [[doc currentView] centerRect:[group rect]];
+};

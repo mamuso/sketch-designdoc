@@ -1,0 +1,23 @@
+{
+  "author" : "Manuel Muñoz Solera",
+  "commands" : [
+    {
+      "script" : "script.cocoascript",
+      "handler" : "onRun",
+      "shortcut" : "",
+      "name" : "Simple Guideline 🐣",
+      "identifier" : "simpleguideline"
+    },
+  ],
+  "menu": {
+    "isRoot": true,
+    "items": [
+      "simpleguideline",
+    ],
+  },
+  "identifier" : "com.mamuso.sketch.simpleguideline",
+  "version" : "1.0",
+  "description" : "Example Sketch Plugin using resources from within the bundle and a library script.",
+  "authorEmail" : "mamuso@mamuso.net",
+  "name" : "Simple Guideline 🐣"
+}
