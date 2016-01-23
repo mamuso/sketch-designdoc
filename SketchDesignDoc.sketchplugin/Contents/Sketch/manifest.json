@@ -5,7 +5,7 @@
       "script" : "script.cocoascript",
       "handler" : "onRun",
       "shortcut" : "",
-      "name" : "Simple Guideline 🐣",
+      "name" : "DesignDoc 🐣",
       "identifier" : "simpleguideline"
     },
   ],
@@ -15,9 +15,9 @@
       "simpleguideline",
     ],
   },
-  "identifier" : "com.mamuso.sketch.simpleguideline",
-  "version" : "1.0",
+  "identifier" : "com.mamuso.sketch.designdoc",
+  "version" : "0.0.1-alpha",
   "description" : "Example Sketch Plugin using resources from within the bundle and a library script.",
   "authorEmail" : "mamuso@mamuso.net",
-  "name" : "Simple Guideline 🐣"
+  "name" : "DesignDoc 🐣"
 }
