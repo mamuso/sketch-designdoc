@@ -10,7 +10,11 @@ var onRun = function(context) {
     var page = pages[i];
     var artboards = [page artboards];
     log(page.name());
-    log([artboards count]);
+    // Loop through the artboards of the page
+    for (var j=0; j<[artboards count]; j++) {
+      var artboard = artboards[j];
+      log(artboard.name());
+    }
   }
   
 };
