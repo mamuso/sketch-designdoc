@@ -1,20 +1,23 @@
 @import "library.cocoascript";
 
 var onRun = function(context) {
-  //  What do we need?
   var doc = context.document;
-  var pages = [doc pages];
+  try {
+    var pages = [doc pages];
 
-  // Loop through the pages to create the initial structure
-  for (var i=0; i<[pages count]; i++) {
-    var page = pages[i];
-    var artboards = [page artboards];
-    log(page.name());
-    // Loop through the artboards of the page
-    for (var j=0; j<[artboards count]; j++) {
-      var artboard = artboards[j];
-      log(artboard.name());
+    // Loop through the pages to create the initial structure
+    for (var i=0; i<[pages count]; i++) {
+      var page = pages[i];
+      var artboards = [page artboards];
+      log(page.name());
+
+      // Loop through the artboards of the page
+      for (var j=0; j<[artboards count]; j++) {
+        var artboard = artboards[j];
+        log(artboard.name());
+      }
     }
+  } catch (e) {
+    NSApplication.sharedApplication().displayDialog_withTitle_(e, "Something went 💩");
   }
-  
 };
