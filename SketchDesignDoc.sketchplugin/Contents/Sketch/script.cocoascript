@@ -1,4 +1,5 @@
-@import "library.cocoascript";
+@import "lib/sandbox.js";
+@import "lib/tools.cocoascript";
 
 var onRun = function(context) {
   var doc = context.document;
