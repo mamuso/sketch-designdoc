@@ -9,6 +9,10 @@ var onRun = function(context) {
     // Parsing the settings page if exist
     Tools.readSettings(pages);
 
+    // Export all the images!
+    Tools.exportImages(pages);
+
+
     // Loop through the pages to create the initial structure
     for (var i=0; i<[pages count]; i++) {
       var page = pages[i];

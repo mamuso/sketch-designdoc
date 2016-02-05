@@ -53,5 +53,13 @@ var Tools = {
       var logo = Tools.findObjectsByName("_logo", layers)
       Config.logo = (logo.count() > 0) ? true : false;
     }
+  },
+
+  // Export aaaall the images
+  exportImages: function(scope) {
+    var home_folder = "/Users/" + NSUserName()
+    new AppSandbox().authorize(home_folder, function(){
+      log("exporting"); 
+    })
   }
 };
