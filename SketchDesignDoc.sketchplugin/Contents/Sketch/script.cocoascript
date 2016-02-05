@@ -4,12 +4,15 @@ var onRun = function(context) {
   var doc = context.document;
   try {
     var pages = [doc pages];
+    
+    // Parsing the settings page if exist
+    Tools.readSettings(pages);
 
     // Loop through the pages to create the initial structure
     for (var i=0; i<[pages count]; i++) {
       var page = pages[i];
       var artboards = [page artboards];
-      log(page.name());
+      //log(page.name());
 
       // Loop through the artboards of the page
       for (var j=0; j<[artboards count]; j++) {

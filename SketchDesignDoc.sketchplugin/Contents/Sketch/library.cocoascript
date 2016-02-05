@@ -1,2 +1,54 @@
-var SketchLib = {
+// Configuration variables
+var Config = {
+	primary: "#333333",
+	secondary: "#FFFFFF"
+}
+
+// set of tools
+var Tools = {
+	// Find an object by name in a given scope
+	findObjectsByName: function(name,scope) {
+    	var predicate = NSPredicate.predicateWithFormat("name == %@",name);
+    	return scope.filteredArrayUsingPredicate(predicate);
+	},
+
+	// Find an object by type in a given scope
+	findObjectsOfType: function(classType,scope) {
+    	var predicate = NSPredicate.predicateWithFormat("self isKindOfClass: %@",classType);
+    	return scope.filteredArrayUsingPredicate(predicate);
+	},
+
+	// Get the solid color of a shape
+	getColor: function(object) {
+		try{
+			var fills = object.style().fills();
+			if (fills.count() > 0 && fills.firstObject().fillType() == 0) { 
+				return "#" + fills.firstObject().color().hexValue().toString();
+			}
+		} catch (e) {
+			return nil;
+		}
+	},
+
+	// Read the settings page if present
+	readSettings: function(scope) {
+		var settingsPage = Tools.findObjectsByName("_settings", scope);
+		if([settingsPage count] == 1) {
+			var page = settingsPage.firstObject();
+			var layers = [page children];
+
+			// Check if we have defined a primary color
+			var primary = Tools.getColor(Tools.findObjectsByName("_primary", layers).firstObject());
+			if (primary) { 
+				Config.primary = primary;
+			}
+
+			// Check if we have defined a secondary color
+			var secondary = Tools.getColor(Tools.findObjectsByName("_secondary", layers).firstObject());
+			if (secondary) { 
+				Config.secondary = secondary;
+			}
+
+		}
+	}
 };
