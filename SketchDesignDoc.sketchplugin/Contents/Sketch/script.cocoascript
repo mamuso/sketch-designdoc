@@ -2,16 +2,16 @@
 @import 'library/tools.cocoascript'
 
 var onRun = function(context) {
-  var doc = context.document;
   try {
-    var pages = [doc pages];
+    var doc = context.document,
+    pages = [doc pages];
     
     // Parsing the settings page if exist
-    Tools.readSettings(pages);
+    com.mamuso.tools.readSettings(pages);
 
     // Export all the images!
-    Tools.exportImages(pages);
-
+    com.mamuso.config.doc = doc;
+    com.mamuso.tools.exportImages(pages);
 
 
     // Loop through the pages to create the initial structure
