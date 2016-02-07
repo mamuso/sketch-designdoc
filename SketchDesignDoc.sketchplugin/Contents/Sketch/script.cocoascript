@@ -4,15 +4,26 @@
 var onRun = function(context) {
   try {
     var doc = context.document,
+    home_folder = "/Users/" + NSUserName(),
     pages = [doc pages];
+
     
-    // Parsing the settings page if exist
-    com.mamuso.tools.readSettings(pages);
-
-    // Export all the images!
-    com.mamuso.config.doc = doc;
-    com.mamuso.tools.exportImages(pages);
-
+    new AppSandbox().authorize(home_folder, function() {
+      com.mamuso.config.doc = doc;
+      com.mamuso.config.baseDir = com.mamuso.tools.getDirFromPrompt();
+  
+      if (com.mamuso.config.baseDir == null) {
+        return;
+      } else {
+  
+        // Parsing the settings page if exist
+        com.mamuso.tools.readSettings(pages);
+    
+        // Export all the images!
+        com.mamuso.config.doc = doc;
+        com.mamuso.tools.exportImages(pages);
+      }
+    });
 
     // Loop through the pages to create the initial structure
     for (var i=0; i<[pages count]; i++) {

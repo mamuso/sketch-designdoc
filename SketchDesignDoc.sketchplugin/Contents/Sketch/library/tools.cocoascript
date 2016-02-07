@@ -3,7 +3,8 @@ var com = {};
 com.mamuso = {
   // Configuration variables
   config: {
-    logo: nil,
+    baseDir: null,
+    logo: null,
     primary: "#333333",
     secondary: "#FFFFFF"
   },
@@ -61,23 +62,18 @@ com.mamuso = {
 
     // Export aaaall the images
     exportImages: function(scope) {
-      var home_folder = "/Users/" + NSUserName();
-      new AppSandbox().authorize(home_folder, function() {
-        log("hi");
-        com.mamuso.tools.getDirFromPrompt();
-      });
+
     },
 
     // Let the user specify a directory
     getDirFromPrompt: function() {
-      log("cu");
       var panel = [NSOpenPanel openPanel];
       [panel setMessage:"🎟 Where do you want to export the documents?"];
       [panel setCanChooseDirectories: true];
       [panel setCanChooseFiles: false];
       [panel setCanCreateDirectories: true];
       var defaultDir = com.mamuso.config.doc.fileURL().URLByDeletingLastPathComponent();
-      log(defaultDir);
+      log("ok");
       [panel setDirectoryURL:defaultDir];
 
       if ([panel runModal] == NSOKButton) {
