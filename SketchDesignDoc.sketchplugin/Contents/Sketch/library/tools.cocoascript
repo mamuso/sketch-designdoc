@@ -3,7 +3,7 @@ var com = {};
 com.mamuso = {
   // Configuration variables
   config: {
-    guideDir: "guide",
+    guideDir: "guidelines",
     scale: "2.0",
     primary: "#333333",
     secondary: "#FFFFFF"
@@ -67,6 +67,9 @@ com.mamuso = {
         var page = scope[i],
         artboards = page.artboards();
 
+        com.mamuso.config.doc.setCurrentPage(page);
+        log(com.mamuso.config.doc.currentPage());
+        // Special case for settings
         if(page.name() == "_settings" && com.mamuso.config.logo) {
           // export the logo
           logo = com.mamuso.tools.findObjectsByName("_logo", artboards).firstObject();
@@ -74,12 +77,17 @@ com.mamuso = {
           com.mamuso.tools.sliceAndExport(logo, logoFilename);
         } else {
 
-          // Loop through the artboards of the page
-          for (var j=0; j<artboards.count(); j++) {
-            var artboard = artboards[j];
-            log(artboard.name());
-          }
+          // Ignore all pages starting with "_"
+          if(!page.name().hasPrefix("_")) {
+            // Loop through the artboards of the page
+            for (var j=0; j<artboards.count(); j++) {
+              var artboard = artboards[j],
+              filename = page.name().stringByReplacingOccurrencesOfString_withString(" ", "_") + "-" + artboard.name().stringByReplacingOccurrencesOfString_withString(" ", "_") + ".png";
+              filePath = com.mamuso.config.baseDir.stringByAppendingPathComponent("img").stringByAppendingPathComponent(filename);
+              com.mamuso.tools.sliceAndExport(artboard, filePath);
+            }
 
+          }
         }
       }
     },
@@ -101,10 +109,10 @@ com.mamuso = {
     },
 
     // Make slice and export 
-    sliceAndExport: function(scope, filename) {
-      var rect = MSSliceTrimming.trimmedRectForSlice(scope),
-      slice = MSExportRequest.requestWithRect_scale(rect, com.mamuso.config.scale);
-      com.mamuso.config.doc.saveArtboardOrSlice_toFile(slice, filename);
+    sliceAndExport: function(obj, filename) {
+      // var rect = MSSliceTrimming.trimmedRectForSlice(obj),
+      // slice = MSExportRequest.requestWithRect_scale(rect, com.mamuso.config.scale);
+      com.mamuso.config.doc.saveArtboardOrSlice_toFile(obj, filename);
     }
   }
 };

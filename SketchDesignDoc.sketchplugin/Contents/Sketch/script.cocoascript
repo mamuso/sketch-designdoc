@@ -5,6 +5,7 @@ var onRun = function(context) {
   try {
     var doc = context.document,
     home_folder = "/Users/" + NSUserName(),
+    currentPage = doc.currentPage(),
     pages = doc.pages();
 
     
@@ -24,6 +25,8 @@ var onRun = function(context) {
       }
     });
 
+    // back to the page you were
+    doc.setCurrentPage(currentPage);
   } catch (e) {
     NSApplication.sharedApplication().displayDialog_withTitle_(e, "Something went 💩");
   }
