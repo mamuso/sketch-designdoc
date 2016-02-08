@@ -3,8 +3,7 @@ var com = {};
 com.mamuso = {
   // Configuration variables
   config: {
-    baseDir: null,
-    logo: null,
+    guideDir: "guide",
     primary: "#333333",
     secondary: "#FFFFFF"
   },
@@ -38,9 +37,9 @@ com.mamuso = {
     // Read the settings page if present
     readSettings: function(scope) {
       var settingsPage = com.mamuso.tools.findObjectsByName("_settings", scope);
-      if([settingsPage count] == 1) {
+      if(settingsPage.count() == 1) {
         var page = settingsPage.firstObject(),
-        layers = [page children];
+        layers = page.children();
 
         // Check if we have defined a primary color
         var primary = com.mamuso.tools.getColor(com.mamuso.tools.findObjectsByName("_primary", layers).firstObject());
@@ -62,7 +61,33 @@ com.mamuso = {
 
     // Export aaaall the images
     exportImages: function(scope) {
+      var doc = com.mamuso.config.doc;
+      // Loop through the pages to create the initial structure
+      for (var i=0; i<scope.count(); i++) {
+        var page = scope[i],
+        artboards = page.artboards();
 
+        if(page.name() == "_settings" && com.mamuso.config.logo) {
+          // export the logo
+          logo = com.mamuso.tools.findObjectsByName("_logo", artboards).firstObject();
+          log(logo)
+          var rect = MSSliceTrimming.trimmedRectForSlice(logo),
+          slice = MSExportRequest.requestWithRect_scale(rect, 2.0);
+
+          logoDir = com.mamuso.config.baseDir.stringByAppendingPathComponent("img/logo.png");
+          log(logoDir);
+          doc.saveArtboardOrSlice_toFile(slice, logoDir);
+
+        } else {
+
+          // Loop through the artboards of the page
+          for (var j=0; j<artboards.count(); j++) {
+            var artboard = artboards[j];
+            log(artboard.name());
+          }
+
+        }
+      }
     },
 
     // Let the user specify a directory
@@ -73,7 +98,6 @@ com.mamuso = {
       [panel setCanChooseFiles: false];
       [panel setCanCreateDirectories: true];
       var defaultDir = com.mamuso.config.doc.fileURL().URLByDeletingLastPathComponent();
-      log("ok");
       [panel setDirectoryURL:defaultDir];
 
       if ([panel runModal] == NSOKButton) {

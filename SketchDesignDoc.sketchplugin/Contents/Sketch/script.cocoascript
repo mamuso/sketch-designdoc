@@ -1,16 +1,16 @@
-@import 'library/sandbox.js'
-@import 'library/tools.cocoascript'
+@import 'library/sandbox.js';
+@import 'library/tools.cocoascript';
 
 var onRun = function(context) {
   try {
     var doc = context.document,
     home_folder = "/Users/" + NSUserName(),
-    pages = [doc pages];
+    pages = doc.pages();
 
     
     new AppSandbox().authorize(home_folder, function() {
       com.mamuso.config.doc = doc;
-      com.mamuso.config.baseDir = com.mamuso.tools.getDirFromPrompt();
+      com.mamuso.config.baseDir = com.mamuso.tools.getDirFromPrompt().stringByAppendingPathComponent(com.mamuso.config.guideDir);
   
       if (com.mamuso.config.baseDir == null) {
         return;
@@ -20,15 +20,14 @@ var onRun = function(context) {
         com.mamuso.tools.readSettings(pages);
     
         // Export all the images!
-        com.mamuso.config.doc = doc;
         com.mamuso.tools.exportImages(pages);
       }
     });
 
     // Loop through the pages to create the initial structure
-    for (var i=0; i<[pages count]; i++) {
+    for (var i=0; i< pages.count(); i++) {
       var page = pages[i];
-      var artboards = [page artboards];
+      var artboards = page.artboards();
       //log(page.name());
 
       // Loop through the artboards of the page
