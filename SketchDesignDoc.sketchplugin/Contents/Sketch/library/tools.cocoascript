@@ -4,6 +4,7 @@ com.mamuso = {
   // Configuration variables
   config: {
     guideDir: "guide",
+    scale: "2.0",
     primary: "#333333",
     secondary: "#FFFFFF"
   },
@@ -61,7 +62,6 @@ com.mamuso = {
 
     // Export aaaall the images
     exportImages: function(scope) {
-      var doc = com.mamuso.config.doc;
       // Loop through the pages to create the initial structure
       for (var i=0; i<scope.count(); i++) {
         var page = scope[i],
@@ -70,14 +70,8 @@ com.mamuso = {
         if(page.name() == "_settings" && com.mamuso.config.logo) {
           // export the logo
           logo = com.mamuso.tools.findObjectsByName("_logo", artboards).firstObject();
-          log(logo)
-          var rect = MSSliceTrimming.trimmedRectForSlice(logo),
-          slice = MSExportRequest.requestWithRect_scale(rect, 2.0);
-
-          logoDir = com.mamuso.config.baseDir.stringByAppendingPathComponent("img/logo.png");
-          log(logoDir);
-          doc.saveArtboardOrSlice_toFile(slice, logoDir);
-
+          logoFilename = com.mamuso.config.baseDir.stringByAppendingPathComponent("img/logo.png");
+          com.mamuso.tools.sliceAndExport(logo, logoFilename);
         } else {
 
           // Loop through the artboards of the page
@@ -104,6 +98,13 @@ com.mamuso = {
         var message = [panel filename];
         return message;
       }
+    },
+
+    // Make slice and export 
+    sliceAndExport: function(scope, filename) {
+      var rect = MSSliceTrimming.trimmedRectForSlice(scope),
+      slice = MSExportRequest.requestWithRect_scale(rect, com.mamuso.config.scale);
+      com.mamuso.config.doc.saveArtboardOrSlice_toFile(slice, filename);
     }
   }
 };
