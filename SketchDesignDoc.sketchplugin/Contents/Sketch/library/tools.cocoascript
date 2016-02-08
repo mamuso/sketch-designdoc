@@ -60,15 +60,17 @@ com.mamuso = {
       }
     },
 
-    // Export aaaall the images
-    exportImages: function(scope) {
+    // Export images and build each individual page
+    buildGuide: function(scope) {
       // Loop through the pages to create the initial structure
       for (var i=0; i<scope.count(); i++) {
         var page = scope[i],
+        layers = page.children(),
         artboards = page.artboards();
 
+        // Changing page, or we will not export a damn thing
         com.mamuso.config.doc.setCurrentPage(page);
-        log(com.mamuso.config.doc.currentPage());
+
         // Special case for settings
         if(page.name() == "_settings" && com.mamuso.config.logo) {
           // export the logo
@@ -82,11 +84,18 @@ com.mamuso = {
             // Loop through the artboards of the page
             for (var j=0; j<artboards.count(); j++) {
               var artboard = artboards[j],
+
+              // Export the image
               filename = page.name().stringByReplacingOccurrencesOfString_withString(" ", "_") + "-" + artboard.name().stringByReplacingOccurrencesOfString_withString(" ", "_") + ".png";
               filePath = com.mamuso.config.baseDir.stringByAppendingPathComponent("img").stringByAppendingPathComponent(filename);
               com.mamuso.tools.sliceAndExport(artboard, filePath);
-            }
 
+              // Try to find the text layer
+              artboardText = com.mamuso.tools.findObjectsByName(artboard.name() + "_bodytext", layers).firstObject();
+              if(artboardText){
+                
+              }
+            }
           }
         }
       }

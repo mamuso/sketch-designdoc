@@ -20,8 +20,8 @@ var onRun = function(context) {
         // Parsing the settings page if exist
         com.mamuso.tools.readSettings(pages);
     
-        // Export all the images!
-        com.mamuso.tools.exportImages(pages);
+        // Let's loop!
+        com.mamuso.tools.buildGuide(pages);
       }
     });
 
