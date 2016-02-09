@@ -1,0 +1,6 @@
+framework module MMMarkdown {
+  umbrella header "MMMarkdown.h"
+
+  export *
+  module * { export * }
+}

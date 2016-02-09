@@ -5,9 +5,15 @@ var onRun = function(context) {
   try {
     var doc = context.document,
     plugin = context.plugin,
+    scriptPath = context.scriptPath,
+    pluginRoot = scriptPath.stringByDeletingLastPathComponent(),
     home_folder = "/Users/" + NSUserName(),
     currentPage = doc.currentPage(),
     pages = doc.pages();
+
+
+    // Load MMMarkdown
+    com.mamuso.tools.loadFramework(pluginRoot);
 
     new AppSandbox().authorize(home_folder, function() {
       com.mamuso.config.doc = doc;

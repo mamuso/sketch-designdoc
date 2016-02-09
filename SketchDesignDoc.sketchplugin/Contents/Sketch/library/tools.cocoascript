@@ -11,6 +11,17 @@ com.mamuso = {
 
   // Set of tools
   tools: {
+
+    // Import MMMarkdown
+    loadFramework: function(pluginRoot) {
+      if (NSClassFromString('MMMarkdown') == null) {
+        var mocha = [Mocha sharedRuntime]
+        return [mocha loadFrameworkWithName:'MMMarkdown' inDirectory:pluginRoot]
+      } else {
+        return true
+      }
+    },
+
     // Find an object by name in a given scope
     findObjectsByName: function(name,scope) {
       var predicate = NSPredicate.predicateWithFormat("name == %@",name);
@@ -93,12 +104,18 @@ com.mamuso = {
               // Try to find the text layer
               artboardText = com.mamuso.tools.findObjectsByName(artboard.name() + "_bodytext", layers).firstObject();
               if(artboardText && artboardText.class() == "MSTextLayer"){
-                log(artboardText.stringValue())
+                log(com.mamuso.tools.markdownToHTML(artboardText.stringValue()))
               }
             }
           }
         }
       }
+    },
+
+    // Text to Markdown
+    markdownToHTML: function(text) {
+        var html = [MMMarkdown HTMLStringWithMarkdown:text error:null];
+        return html;
     },
 
     // Let the user specify a directory
