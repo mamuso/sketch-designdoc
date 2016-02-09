@@ -2,9 +2,6 @@
 @import 'library/tools.cocoascript';
 
 var onRun = function(context) {
-// Adding MMMarkdown
-var plugin = context.plugin;
-
   try {
     var doc = context.document,
     plugin = context.plugin,
