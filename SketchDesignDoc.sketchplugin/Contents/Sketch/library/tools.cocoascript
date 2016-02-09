@@ -92,8 +92,8 @@ com.mamuso = {
 
               // Try to find the text layer
               artboardText = com.mamuso.tools.findObjectsByName(artboard.name() + "_bodytext", layers).firstObject();
-              if(artboardText){
-                
+              if(artboardText && artboardText.class() == "MSTextLayer"){
+                log(artboardText.stringValue())
               }
             }
           }
@@ -114,6 +114,8 @@ com.mamuso = {
       if ([panel runModal] == NSOKButton) {
         var message = [panel filename];
         return message;
+      } else {
+        return null;
       }
     },
 

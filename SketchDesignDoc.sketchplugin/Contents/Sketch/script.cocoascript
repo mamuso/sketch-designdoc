@@ -2,21 +2,23 @@
 @import 'library/tools.cocoascript';
 
 var onRun = function(context) {
+// Adding MMMarkdown
+var plugin = context.plugin;
+
   try {
     var doc = context.document,
+    plugin = context.plugin,
     home_folder = "/Users/" + NSUserName(),
     currentPage = doc.currentPage(),
     pages = doc.pages();
 
-    
     new AppSandbox().authorize(home_folder, function() {
       com.mamuso.config.doc = doc;
-      com.mamuso.config.baseDir = com.mamuso.tools.getDirFromPrompt().stringByAppendingPathComponent(com.mamuso.config.guideDir);
-  
+      com.mamuso.config.baseDir = com.mamuso.tools.getDirFromPrompt()
       if (com.mamuso.config.baseDir == null) {
         return;
       } else {
-  
+        com.mamuso.config.baseDir = com.mamuso.config.baseDir.stringByAppendingPathComponent(com.mamuso.config.guideDir);
         // Parsing the settings page if exist
         com.mamuso.tools.readSettings(pages);
     
