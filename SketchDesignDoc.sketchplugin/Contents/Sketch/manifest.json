@@ -5,19 +5,19 @@
       "script" : "script.cocoascript",
       "handler" : "onRun",
       "shortcut" : "",
-      "name" : "DesignDoc 🐣",
-      "identifier" : "simpleguideline"
+      "name" : "Export Design Doc 🐣",
+      "identifier" : "sketch-designdoc"
     },
   ],
   "menu": {
     "isRoot": true,
     "items": [
-      "simpleguideline",
+      "sketch-designdoc",
     ],
   },
   "identifier" : "com.mamuso.sketch.designdoc",
   "version" : "0.0.1-alpha",
-  "description" : "Example Sketch Plugin using resources from within the bundle and a library script.",
+  "description" : "Create a design documentation site from a Sketch file",
   "authorEmail" : "mamuso@mamuso.net",
   "name" : "DesignDoc 🐣"
 }
