@@ -133,27 +133,6 @@ com.mamuso = {
         return html;
     },
 
-    htmlBuildArtboard: function(title, body, img) {
-      html = "<section>";
-      if(title != null) {
-        html += "<header><h2>";
-        html += title;
-        html += "</h2></header>";
-      }
-
-      if(img != null) {
-        html += "<img src='" + img + "'>";
-      }
-
-      if(body != null) {
-        html += "<div>" + body + "</div>";
-      }
-
-      html += "</section>";
-      
-      return html;
-    },
-
     // Let the user specify a directory
     getDirFromPrompt: function() {
       var panel = [NSOpenPanel openPanel];
@@ -174,9 +153,51 @@ com.mamuso = {
 
     // Make slice and export 
     sliceAndExport: function(obj, filename) {
-      // var rect = MSSliceTrimming.trimmedRectForSlice(obj),
-      // slice = MSExportRequest.requestWithRect_scale(rect, com.mamuso.config.scale);
-      com.mamuso.config.doc.saveArtboardOrSlice_toFile(obj, filename);
+      var rect = MSSliceTrimming.trimmedRectForSlice(obj),
+      slice = MSExportRequest.requestWithRect_scale(rect, com.mamuso.config.scale);
+      com.mamuso.config.doc.saveArtboardOrSlice_toFile(slice, filename);
+    },
+
+    // ---------------------------------------------------------------------
+    // HTML BUILDERS
+    // ---------------------------------------------------------------------
+    htmlSetHeader: function() {
+      html = "";
+      return html;
+    },
+
+    htmlBuildPageTitle: function(title) {
+      html = "<section>";
+      if(title != null) {
+        html += "<header><h1>";
+        html += title;
+        html += "</h1></header>";
+      }
+      html += "</section>";
+      
+      return html;
+    },
+
+    htmlBuildArtboard: function(title, body, img) {
+      html = "<section>";
+      if(title != null) {
+        html += "<header><h2>";
+        html += title;
+        html += "</h2></header>";
+      }
+
+      if(img != null) {
+        html += "<img src='" + img + "'>";
+      }
+
+      if(body != null) {
+        html += "<div>" + body + "</div>";
+      }
+
+      html += "</section>";
+      
+      return html;
     }
+
   }
 };
