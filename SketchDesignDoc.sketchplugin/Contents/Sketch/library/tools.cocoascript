@@ -101,12 +101,11 @@ com.mamuso = {
             // Loop through the artboards of the page
             for (var j=0; j<artboards.count(); j++) {
               var artboard = artboards[j],
-
-              // Artboard title IF doesn't start with _
-              artboardTitle = artboard.name().hasPrefix("_") ? "" : artboard.name();
+              artboardTitle = artboard.name().hasPrefix("_") ? "" : artboard.name(),
+              artboardId = page.name().stringByReplacingOccurrencesOfString_withString(" ", "_") + "-" + artboard.name().stringByReplacingOccurrencesOfString_withString(" ", "_");
 
               // Export the image
-              filename = page.name().stringByReplacingOccurrencesOfString_withString(" ", "_") + "-" + artboard.name().stringByReplacingOccurrencesOfString_withString(" ", "_") + ".png";
+              filename = artboardId + ".png";
               filePath = com.mamuso.config.baseDir.stringByAppendingPathComponent("img").stringByAppendingPathComponent(filename);
               com.mamuso.tools.sliceAndExport(artboard, filePath);
 
@@ -115,7 +114,7 @@ com.mamuso = {
               if(artboardText && artboardText.class() == "MSTextLayer"){
                 artboardHtmlText = com.mamuso.tools.markdownToHTML(artboardText.stringValue());
               }
-              pageHtml += com.mamuso.tools.htmlBuildArtboard(artboardTitle, artboardHtmlText, "img/" + filename);
+              pageHtml += com.mamuso.tools.htmlBuildArtboard(artboardTitle, artboardId, artboardHtmlText, "img/" + filename);
             }
 
             // Let's writhe the htmls :)
@@ -178,10 +177,10 @@ com.mamuso = {
       return html;
     },
 
-    htmlBuildArtboard: function(title, body, img) {
+    htmlBuildArtboard: function(title, artboardId, body, img) {
       html = "<section>";
       if(title != null) {
-        html += "<header><h2>";
+        html += "<header><h2 id='" + artboardId + "'>";
         html += title;
         html += "</h2></header>";
       }
