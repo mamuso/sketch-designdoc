@@ -2,7 +2,7 @@
 @import 'library/tools.cocoascript';
 
 var onRun = function(context) {
-  // try {
+  try {
     var doc = context.document,
     plugin = context.plugin,
     scriptPath = context.scriptPath,
@@ -32,7 +32,7 @@ var onRun = function(context) {
 
     // back to the page you were
     doc.setCurrentPage(currentPage);
-  // } catch (e) {
-  //   NSApplication.sharedApplication().displayDialog_withTitle_(e, "Something went 💩");
-  // }
+  } catch (e) {
+    NSApplication.sharedApplication().displayDialog_withTitle_(e, "Something went 💩");
+  }
 };
