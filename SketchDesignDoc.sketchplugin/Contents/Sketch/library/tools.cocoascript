@@ -73,11 +73,13 @@ com.mamuso = {
 
     // Export images and build each individual page
     buildGuide: function(scope) {
+      scope = scope.reversedArray();
       // Loop through the pages to create the initial structure
       for (var i=0; i<scope.count(); i++) {
         var page = scope[i],
         layers = page.children(),
-        artboards = page.artboards();
+        artboards = page.artboards().reversedArray(),
+        pageHtml = "";
 
         // Changing page, or we will not export a damn thing
         com.mamuso.config.doc.setCurrentPage(page);
@@ -92,9 +94,16 @@ com.mamuso = {
 
           // Ignore all pages starting with "_"
           if(!page.name().hasPrefix("_")) {
+
+            // Page Header
+            pageHtml += "<h1>" + page.name() + "</h1>";
+
             // Loop through the artboards of the page
             for (var j=0; j<artboards.count(); j++) {
               var artboard = artboards[j],
+
+              // Artboard title IF doesn't start with _
+              artboardTitle = artboard.name().hasPrefix("_") ? "" : artboard.name();
 
               // Export the image
               filename = page.name().stringByReplacingOccurrencesOfString_withString(" ", "_") + "-" + artboard.name().stringByReplacingOccurrencesOfString_withString(" ", "_") + ".png";
@@ -104,9 +113,15 @@ com.mamuso = {
               // Try to find the text layer
               artboardText = com.mamuso.tools.findObjectsByName(artboard.name() + "_bodytext", layers).firstObject();
               if(artboardText && artboardText.class() == "MSTextLayer"){
-                log(com.mamuso.tools.markdownToHTML(artboardText.stringValue()))
+                artboardHtmlText = com.mamuso.tools.markdownToHTML(artboardText.stringValue());
               }
+              pageHtml += com.mamuso.tools.htmlBuildArtboard(artboardTitle, artboardHtmlText, "img/" + filename);
             }
+
+            // Let's writhe the htmls :)
+            var htmlName = page.name().stringByReplacingOccurrencesOfString_withString(" ", "_") + ".html",
+            htmlContent = [NSString stringWithFormat:"%@", pageHtml];
+            htmlContent.writeToFile_atomically_encoding_error(com.mamuso.config.baseDir.stringByAppendingPathComponent(htmlName), NSUTF8StringEncoding, true, null);
           }
         }
       }
@@ -116,6 +131,27 @@ com.mamuso = {
     markdownToHTML: function(text) {
         var html = [MMMarkdown HTMLStringWithMarkdown:text error:null];
         return html;
+    },
+
+    htmlBuildArtboard: function(title, body, img) {
+      html = "<section>";
+      if(title != null) {
+        html += "<header><h2>";
+        html += title;
+        html += "</h2></header>";
+      }
+
+      if(img != null) {
+        html += "<img src='" + img + "'>";
+      }
+
+      if(body != null) {
+        html += "<div>" + body + "</div>";
+      }
+
+      html += "</section>";
+      
+      return html;
     },
 
     // Let the user specify a directory
