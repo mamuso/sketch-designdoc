@@ -121,7 +121,7 @@ com.mamuso = {
             // Let's writhe the htmls :)
             var htmlName = page.name().stringByReplacingOccurrencesOfString_withString(" ", "_") + ".html",
             htmlContent = [NSString stringWithFormat:"%@", pageHtml];
-            htmlContent.writeToFile_atomically_encoding_error(com.mamuso.config.baseDir.stringByAppendingPathComponent(htmlName), NSUTF8StringEncoding, true, null);
+            htmlContent.writeToFile_atomically_encoding_error(com.mamuso.config.baseDir.stringByAppendingPathComponent(htmlName), true, NSUTF8StringEncoding, null);
           }
         }
       }
