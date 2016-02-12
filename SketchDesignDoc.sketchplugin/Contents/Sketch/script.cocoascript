@@ -1,37 +1,39 @@
 @import 'library/sandbox.js';
-@import 'library/tools.cocoascript';
+@import 'library/com.mamuso.config.cocoascript';
+@import 'library/com.mamuso.tools.cocoascript';
+@import 'library/com.mamuso.builder.cocoascript';
 
 var onRun = function(context) {
   try {
     var doc = context.document,
-    plugin = context.plugin,
+    currentPage = doc.currentPage(),
+    pages = doc.pages(),
     scriptPath = context.scriptPath,
     pluginRoot = scriptPath.stringByDeletingLastPathComponent(),
-    home_folder = "/Users/" + NSUserName(),
-    currentPage = doc.currentPage(),
-    pages = doc.pages();
-
+    homeFolder = "/Users/" + NSUserName();
 
     // Load MMMarkdown
     com.mamuso.tools.loadFramework(pluginRoot);
 
-    new AppSandbox().authorize(home_folder, function() {
+    new AppSandbox().authorize(homeFolder, function() {
       com.mamuso.config.doc = doc;
-      com.mamuso.config.baseDir = com.mamuso.tools.getDirFromPrompt()
+      com.mamuso.config.baseDir = com.mamuso.tools.getDirFromPrompt();
+
       if (com.mamuso.config.baseDir == null) {
         return;
       } else {
         com.mamuso.config.baseDir = com.mamuso.config.baseDir.stringByAppendingPathComponent(com.mamuso.config.guideDir);
         // Parsing the settings page if exist
-        com.mamuso.tools.readSettings(pages);
+        com.mamuso.builder.readSettings(pages);
     
         // Let's loop!
-        com.mamuso.tools.buildGuide(pages);
+        com.mamuso.builder.buildGuide(pages);
       }
     });
 
     // back to the page you were
     doc.setCurrentPage(currentPage);
+
   } catch (e) {
     NSApplication.sharedApplication().displayDialog_withTitle_(e, "Something went 💩");
   }

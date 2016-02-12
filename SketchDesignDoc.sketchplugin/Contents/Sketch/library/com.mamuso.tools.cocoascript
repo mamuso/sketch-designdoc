@@ -1,0 +1,82 @@
+var com = com ? com : {};
+com.mamuso = com.mamuso ? com.mamuso : {};
+
+com.mamuso.tools = {
+  // -------------------------------------------------------------------
+  // Find an object by name in a given scope
+  // -------------------------------------------------------------------
+  findObjectsByName: function(name,scope) {
+    var predicate = NSPredicate.predicateWithFormat("name == %@",name);
+    return scope.filteredArrayUsingPredicate(predicate);
+  },
+
+  // -------------------------------------------------------------------
+  // Find an object by type in a given scope
+  // -------------------------------------------------------------------
+  findObjectsOfType: function(classType,scope) {
+    var predicate = NSPredicate.predicateWithFormat("self isKindOfClass: %@",classType);
+    return scope.filteredArrayUsingPredicate(predicate);
+  },
+
+  // -------------------------------------------------------------------
+  // Get the solid color of a shape
+  // -------------------------------------------------------------------
+  getColor: function(object) {
+    try{
+      var fills = object.style().fills();
+      if (fills.count() > 0 && fills.firstObject().fillType() == 0) { 
+        return "#" + fills.firstObject().color().hexValue().toString();
+      }
+    } catch (e) {
+      return nil;
+    }
+  },
+
+  // -------------------------------------------------------------------
+  // Make slice and export
+  // -------------------------------------------------------------------
+  sliceAndExport: function(obj, filename) {
+    var rect = MSSliceTrimming.trimmedRectForSlice(obj),
+    slice = MSExportRequest.requestWithRect_scale(rect, com.mamuso.config.scale);
+    com.mamuso.config.doc.saveArtboardOrSlice_toFile(slice, filename);
+  },
+
+  // -------------------------------------------------------------------
+  // Let the user specify a directory
+  // -------------------------------------------------------------------
+  getDirFromPrompt: function() {
+    var panel = [NSOpenPanel openPanel];
+    [panel setMessage:"🎟 Where do you want to export the documents?"];
+    [panel setCanChooseDirectories: true];
+    [panel setCanChooseFiles: false];
+    [panel setCanCreateDirectories: true];
+    var defaultDir = com.mamuso.config.doc.fileURL().URLByDeletingLastPathComponent();
+    [panel setDirectoryURL:defaultDir];
+    if ([panel runModal] == NSOKButton) {
+      var message = [panel filename];
+      return message;
+    } else {
+      return null;
+    }
+  },
+
+  // -------------------------------------------------------------------
+  // Import MMMarkdown Framework
+  // -------------------------------------------------------------------
+  loadFramework: function(pluginRoot) {
+    if (NSClassFromString('MMMarkdown') == null) {
+      var mocha = [Mocha sharedRuntime];
+      return [mocha loadFrameworkWithName:'MMMarkdown' inDirectory:pluginRoot];
+    } else {
+      return true;
+    }
+  },
+
+  // -------------------------------------------------------------------
+  // Text to Markdown
+  // -------------------------------------------------------------------
+  markdownToHTML: function(text) {
+    var html = [MMMarkdown HTMLStringWithMarkdown:text error:null];
+    return html;
+  }
+};
