@@ -37,28 +37,31 @@ com.mamuso.builder = {
       var page = scope[i],
       layers = page.children(),
       artboards = page.artboards().reversedArray(),
-      pageHtml = "";
+      pageVariables = {};
 
       // Changing page, or we will not export a damn thing
       com.mamuso.config.doc.setCurrentPage(page);
 
       // Special case for settings
       if(page.name() == "_settings" && com.mamuso.config.logo) {
+
         // export the logo
         logo = com.mamuso.tools.findObjectsByName("_logo", artboards).firstObject();
         logoFilename = com.mamuso.config.basePath.stringByAppendingPathComponent("img/logo.png");
         com.mamuso.tools.sliceAndExport(logo, logoFilename);
+      
       } else {
+
         // Ignore all pages starting with "_"
         if(!page.name().hasPrefix("_")) {
-          // Page Header
-          pageHtml += "<h1>" + page.name() + "</h1>";
+          pageVariables.title = page.name();
+          pageVariables.artboards = [];
 
           // Loop through the artboards of the page
           for (var j=0; j<artboards.count(); j++) {
-            var artboard = artboards[j],
-            artboardTitle = artboard.name().hasPrefix("_") ? "" : artboard.name(),
-            artboardId = page.name().stringByReplacingOccurrencesOfString_withString(" ", "_") + "-" + artboard.name().stringByReplacingOccurrencesOfString_withString(" ", "_");
+            var artboard = artboards[j];
+            var artboardTitle = artboard.name().hasPrefix("_") ? "" : artboard.name();
+            var artboardId = page.name().stringByReplacingOccurrencesOfString_withString(" ", "_") + "-" + artboard.name().stringByReplacingOccurrencesOfString_withString(" ", "_");
 
             // Export the image
             filename = artboardId + ".png";
@@ -66,61 +69,28 @@ com.mamuso.builder = {
             com.mamuso.tools.sliceAndExport(artboard, filePath);
 
             // Try to find the text layer
-            artboardText = com.mamuso.tools.findObjectsByName(artboard.name() + "_bodytext", layers).firstObject();
+            var artboardText = com.mamuso.tools.findObjectsByName(artboard.name() + "_bodytext", layers).firstObject();
             if(artboardText && artboardText.class() == "MSTextLayer"){
               artboardHtmlText = com.mamuso.tools.markdownToHTML(artboardText.stringValue());
             }
-            pageHtml += com.mamuso.builder.htmlBuildArtboard(artboardTitle, artboardId, artboardHtmlText, "img/" + filename);
+
+            pageVariables.artboards.push({
+              id: artboardId,
+              title: artboardTitle,
+              text: artboardHtmlText,
+              image: "img/" + filename
+            })
           }
 
           // Let's writhe the htmls :)
-          var htmlName = page.name().stringByReplacingOccurrencesOfString_withString(" ", "_") + ".html",
-          htmlContent = [NSString stringWithFormat:"%@", pageHtml];
-          htmlContent.writeToFile_atomically_encoding_error(com.mamuso.config.basePath.stringByAppendingPathComponent(htmlName), true, NSUTF8StringEncoding, null);
+          var pageTemplatePath = com.mamuso.config.templatePath.stringByAppendingPathComponent("Page.mustache");
+          var htmlName = page.name().stringByReplacingOccurrencesOfString_withString(" ", "_") + ".html";
+          var mustacheTemplate = [GRMustacheTemplate templateFromContentsOfFile:pageTemplatePath error:null];
+          var mustacheTemplateContent = [mustacheTemplate renderObject:pageVariables error:null];
+          
+          mustacheTemplateContent.writeToFile_atomically_encoding_error(com.mamuso.config.basePath.stringByAppendingPathComponent(htmlName), true, NSUTF8StringEncoding, null);
         }
       }
     }
-  },
-
-  // -------------------------------------------------------------------
-  // Build html file header
-  // -------------------------------------------------------------------
-  htmlSetHeader: function() {
-    html = "";
-    return html;
-  },
-
-  // -------------------------------------------------------------------
-  // Build page title
-  // -------------------------------------------------------------------
-  htmlBuildPageTitle: function(title) {
-    html = "<section>";
-    if(title != null) {
-      html += "<header><h1>";
-      html += title;
-      html += "</h1></header>";
-    }
-    html += "</section>";
-    return html;
-  },
-
-  // -------------------------------------------------------------------
-  // Build html for arboards
-  // -------------------------------------------------------------------
-  htmlBuildArtboard: function(title, artboardId, body, img) {
-    html = "<section>";
-    if(title != null) {
-      html += "<header><h2 id='" + artboardId + "'>";
-      html += title;
-      html += "</h2></header>";
-    }
-    if(img != null) {
-      html += "<img src='" + img + "'>";
-    }
-    if(body != null) {
-      html += "<div>" + body + "</div>";
-    }
-    html += "</section>";
-    return html;
   }
 };

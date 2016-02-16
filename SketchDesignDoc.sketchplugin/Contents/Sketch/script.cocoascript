@@ -9,8 +9,6 @@ var onRun = function(context) {
     currentPage = doc.currentPage(),
     pages = doc.pages(),
     scriptPath = context.scriptPath,
-    // pageTemplate = scriptPath.stringByDeletingLastPathComponent().stringByAppendingPathComponent("templates").stringByAppendingPathComponent("Page.mustache"),
-    // indexTemplate = scriptPath.stringByDeletingLastPathComponent().stringByAppendingPathComponent("templates").stringByAppendingPathComponent("Index.mustache"),
     frameworksPath = scriptPath.stringByDeletingLastPathComponent().stringByAppendingPathComponent("frameworks"),
     homeFolder = "/Users/" + NSUserName();
 
@@ -26,7 +24,8 @@ var onRun = function(context) {
         return;
       } else {
         com.mamuso.config.basePath = com.mamuso.config.basePath.stringByAppendingPathComponent(com.mamuso.config.guidePath);
-        com.mamuso.config.templateDir =
+        com.mamuso.config.templatePath = scriptPath.stringByDeletingLastPathComponent().stringByAppendingPathComponent("templates"); 
+
         // Parsing the settings page if exist
         com.mamuso.builder.readSettings(pages);
     
