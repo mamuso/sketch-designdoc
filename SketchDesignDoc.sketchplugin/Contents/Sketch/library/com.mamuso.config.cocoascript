@@ -2,7 +2,7 @@ var com = com ? com : {};
 com.mamuso = com.mamuso ? com.mamuso : {};
 
 com.mamuso.config = {
-  guideDir: "designdoc",    // Name of the folder we are going to create
+  guidePath: "designdoc",    // Name of the folder we are going to create
   scale: "2.0",             // Scale of the images we are going to export
   primary: "#333333",       // Color for headers
   secondary: "#FFFFFF"      // Color for accents

@@ -9,21 +9,24 @@ var onRun = function(context) {
     currentPage = doc.currentPage(),
     pages = doc.pages(),
     scriptPath = context.scriptPath,
-    pluginRoot = scriptPath.stringByDeletingLastPathComponent().stringByAppendingPathComponent("frameworks"),
+    // pageTemplate = scriptPath.stringByDeletingLastPathComponent().stringByAppendingPathComponent("templates").stringByAppendingPathComponent("Page.mustache"),
+    // indexTemplate = scriptPath.stringByDeletingLastPathComponent().stringByAppendingPathComponent("templates").stringByAppendingPathComponent("Index.mustache"),
+    frameworksPath = scriptPath.stringByDeletingLastPathComponent().stringByAppendingPathComponent("frameworks"),
     homeFolder = "/Users/" + NSUserName();
 
     // Load Frameworks
-    com.mamuso.tools.loadFramework(pluginRoot, "MMMarkdown");
-    com.mamuso.tools.loadFramework(pluginRoot, "GRMustache");
+    com.mamuso.tools.loadFramework(frameworksPath, "MMMarkdown");
+    com.mamuso.tools.loadFramework(frameworksPath, "GRMustache");
 
     new AppSandbox().authorize(homeFolder, function() {
       com.mamuso.config.doc = doc;
-      com.mamuso.config.baseDir = com.mamuso.tools.getDirFromPrompt();
+      com.mamuso.config.basePath = com.mamuso.tools.getDirFromPrompt();
 
-      if (com.mamuso.config.baseDir == null) {
+      if (com.mamuso.config.basePath == null) {
         return;
       } else {
-        com.mamuso.config.baseDir = com.mamuso.config.baseDir.stringByAppendingPathComponent(com.mamuso.config.guideDir);
+        com.mamuso.config.basePath = com.mamuso.config.basePath.stringByAppendingPathComponent(com.mamuso.config.guidePath);
+        com.mamuso.config.templateDir =
         // Parsing the settings page if exist
         com.mamuso.builder.readSettings(pages);
     

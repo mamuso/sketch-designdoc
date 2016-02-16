@@ -46,7 +46,7 @@ com.mamuso.builder = {
       if(page.name() == "_settings" && com.mamuso.config.logo) {
         // export the logo
         logo = com.mamuso.tools.findObjectsByName("_logo", artboards).firstObject();
-        logoFilename = com.mamuso.config.baseDir.stringByAppendingPathComponent("img/logo.png");
+        logoFilename = com.mamuso.config.basePath.stringByAppendingPathComponent("img/logo.png");
         com.mamuso.tools.sliceAndExport(logo, logoFilename);
       } else {
         // Ignore all pages starting with "_"
@@ -62,7 +62,7 @@ com.mamuso.builder = {
 
             // Export the image
             filename = artboardId + ".png";
-            filePath = com.mamuso.config.baseDir.stringByAppendingPathComponent("img").stringByAppendingPathComponent(filename);
+            filePath = com.mamuso.config.basePath.stringByAppendingPathComponent("img").stringByAppendingPathComponent(filename);
             com.mamuso.tools.sliceAndExport(artboard, filePath);
 
             // Try to find the text layer
@@ -76,7 +76,7 @@ com.mamuso.builder = {
           // Let's writhe the htmls :)
           var htmlName = page.name().stringByReplacingOccurrencesOfString_withString(" ", "_") + ".html",
           htmlContent = [NSString stringWithFormat:"%@", pageHtml];
-          htmlContent.writeToFile_atomically_encoding_error(com.mamuso.config.baseDir.stringByAppendingPathComponent(htmlName), true, NSUTF8StringEncoding, null);
+          htmlContent.writeToFile_atomically_encoding_error(com.mamuso.config.basePath.stringByAppendingPathComponent(htmlName), true, NSUTF8StringEncoding, null);
         }
       }
     }
