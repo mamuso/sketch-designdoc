@@ -63,10 +63,10 @@ com.mamuso.tools = {
   // -------------------------------------------------------------------
   // Import MMMarkdown Framework
   // -------------------------------------------------------------------
-  loadFramework: function(pluginRoot) {
-    if (NSClassFromString('MMMarkdown') == null) {
+  loadFramework: function(pluginRoot, frameworkName) {
+    if (NSClassFromString(frameworkName) == null) {
       var mocha = [Mocha sharedRuntime];
-      return [mocha loadFrameworkWithName:'MMMarkdown' inDirectory:pluginRoot];
+      return [mocha loadFrameworkWithName:frameworkName inDirectory:pluginRoot];
     } else {
       return true;
     }

@@ -4,16 +4,17 @@
 @import 'library/com.mamuso.builder.cocoascript';
 
 var onRun = function(context) {
-  try {
+  // try {
     var doc = context.document,
     currentPage = doc.currentPage(),
     pages = doc.pages(),
     scriptPath = context.scriptPath,
-    pluginRoot = scriptPath.stringByDeletingLastPathComponent(),
+    pluginRoot = scriptPath.stringByDeletingLastPathComponent().stringByAppendingPathComponent("frameworks"),
     homeFolder = "/Users/" + NSUserName();
 
-    // Load MMMarkdown
-    com.mamuso.tools.loadFramework(pluginRoot);
+    // Load Frameworks
+    com.mamuso.tools.loadFramework(pluginRoot, "MMMarkdown");
+    com.mamuso.tools.loadFramework(pluginRoot, "GRMustache");
 
     new AppSandbox().authorize(homeFolder, function() {
       com.mamuso.config.doc = doc;
@@ -34,7 +35,7 @@ var onRun = function(context) {
     // back to the page you were
     doc.setCurrentPage(currentPage);
 
-  } catch (e) {
-    NSApplication.sharedApplication().displayDialog_withTitle_(e, "Something went 💩");
-  }
+  // } catch (e) {
+  //   NSApplication.sharedApplication().displayDialog_withTitle_(e, "Something went 💩");
+  // }
 };
