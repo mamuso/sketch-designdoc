@@ -1,0 +1,16 @@
+<nav role="navigation">
+  <ul>
+    {{# menu }}
+      <li>
+        <a href="{{ url }}">{{ name }}</a>
+        <ul>
+          {{# artboards }}
+            <li>
+              <a href="{{ url }}">{{ name }}</a>
+            </li>
+          {{/ artboards }}
+        </ul>
+      </li>
+    {{/ menu }}
+  </ul>
+</nav>

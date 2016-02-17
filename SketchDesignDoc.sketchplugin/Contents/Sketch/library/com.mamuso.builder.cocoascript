@@ -30,14 +30,17 @@ com.mamuso.builder = {
   // Export images and htmls
   // -------------------------------------------------------------------
   buildGuide: function(scope) {
-    scope = scope.reversedArray();
+    var scope = scope.reversedArray();
+    var menuObjects = com.mamuso.builder.getMenuElements(scope);
+    log(menuObjects)
 
-     // Loop through the pages to create the initial structure
+    // Loop through the pages to create the initial structure
     for (var i=0; i<scope.count(); i++) {
-      var page = scope[i],
-      layers = page.children(),
-      artboards = page.artboards().reversedArray(),
-      pageVariables = {};
+      var page = scope[i];
+      var layers = page.children();
+      var artboards = page.artboards().reversedArray();
+      var pageVariables = {};
+      pageVariables.menu = menuObjects;
 
       // Changing page, or we will not export a damn thing
       com.mamuso.config.doc.setCurrentPage(page);
@@ -61,7 +64,7 @@ com.mamuso.builder = {
           for (var j=0; j<artboards.count(); j++) {
             var artboard = artboards[j];
             var artboardTitle = artboard.name().hasPrefix("_") ? "" : artboard.name();
-            var artboardId = page.name().stringByReplacingOccurrencesOfString_withString(" ", "_") + "-" + artboard.name().stringByReplacingOccurrencesOfString_withString(" ", "_");
+            var artboardId = com.mamuso.builder.getArtboardId(page.name(), artboard.name());
 
             // Export the image
             filename = artboardId + ".png";
@@ -84,7 +87,7 @@ com.mamuso.builder = {
 
           // Let's writhe the htmls :)
           var pageTemplatePath = com.mamuso.config.templatePath.stringByAppendingPathComponent("Page.mustache");
-          var htmlName = page.name().stringByReplacingOccurrencesOfString_withString(" ", "_") + ".html";
+          var htmlName = com.mamuso.builder.getPagePath(page.name());
           var mustacheTemplate = [GRMustacheTemplate templateFromContentsOfFile:pageTemplatePath error:null];
           var mustacheTemplateContent = [mustacheTemplate renderObject:pageVariables error:null];
           
@@ -92,5 +95,54 @@ com.mamuso.builder = {
         }
       }
     }
+  },
+
+  // -------------------------------------------------------------------
+  // Get Menu Objects
+  // -------------------------------------------------------------------
+  getMenuElements: function(pages) {
+    var objects = [];
+
+    for (var i=0; i<pages.count(); i++) {
+      var page = pages[i];
+      if(!page.name().hasPrefix("_")) {
+        var subobjects = [];
+        var pagePath = com.mamuso.builder.getPagePath(page.name());
+        var artboards = page.artboards().reversedArray();
+
+        for (var j=0; j<artboards.count(); j++) {
+          var artboard = artboards[j];
+          if(!artboard.name().hasPrefix("_")) {
+            var artboardId = com.mamuso.builder.getArtboardId(page.name(), artboard.name());
+            subobjects.push({
+              name: artboard.name(),
+              url: pagePath + "#" + artboardId
+            });
+          }
+        }
+
+        objects.push({
+          name: page.name(),
+          url: pagePath,
+          artboards: subobjects
+        });
+      }
+    }
+    return objects;
+  },
+
+  // -------------------------------------------------------------------
+  // Page Path
+  // -------------------------------------------------------------------
+  getPagePath: function(pageName) {
+    return pageName.stringByReplacingOccurrencesOfString_withString(" ", "_") + ".html";
+  },
+
+  // -------------------------------------------------------------------
+  // Artboard ID
+  // -------------------------------------------------------------------
+  getArtboardId: function(pageName, artboardName) {
+    return pageName.stringByReplacingOccurrencesOfString_withString(" ", "_").lowercaseString() + "-" + artboardName.stringByReplacingOccurrencesOfString_withString(" ", "_").lowercaseString();
   }
+
 };
