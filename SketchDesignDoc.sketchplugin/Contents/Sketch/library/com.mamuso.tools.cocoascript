@@ -61,7 +61,7 @@ com.mamuso.tools = {
   },
 
   // -------------------------------------------------------------------
-  // Import MMMarkdown Framework
+  // Import Frameworks
   // -------------------------------------------------------------------
   loadFramework: function(pluginRoot, frameworkName) {
     if (NSClassFromString(frameworkName) == null) {
