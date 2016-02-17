@@ -32,7 +32,6 @@ com.mamuso.builder = {
   buildGuide: function(scope) {
     var scope = scope.reversedArray();
     var menuObjects = com.mamuso.builder.getMenuElements(scope);
-    log(menuObjects)
 
     // Loop through the pages to create the initial structure
     for (var i=0; i<scope.count(); i++) {
@@ -95,6 +94,27 @@ com.mamuso.builder = {
         }
       }
     }
+
+    // Set the CSS
+    com.mamuso.builder.setCSS();
+  },
+
+  // -------------------------------------------------------------------
+  // Set CSS file
+  // -------------------------------------------------------------------
+  setCSS: function() {
+    var assetsPath = com.mamuso.config.basePath.stringByAppendingPathComponent("assets");
+
+    if(!NSFileManager.defaultManager().fileExistsAtPath(assetsPath)){
+      NSFileManager.defaultManager().createDirectoryAtPath_withIntermediateDirectories_attributes_error(assetsPath, false, null, null);
+    }
+ 
+    var cssVariables = {};
+    var cssTemplatePath = com.mamuso.config.templatePath.stringByAppendingPathComponent("CSSMain.mustache");
+    var mustacheTemplate = [GRMustacheTemplate templateFromContentsOfFile:cssTemplatePath error:null];
+    var mustacheTemplateContent = [mustacheTemplate renderObject:cssVariables error:null];
+
+    mustacheTemplateContent.writeToFile_atomically_encoding_error(assetsPath.stringByAppendingPathComponent("style.css"), true, NSUTF8StringEncoding, null);
   },
 
   // -------------------------------------------------------------------
