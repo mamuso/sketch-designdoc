@@ -30,7 +30,6 @@ com.mamuso.builder = {
   // Export images and htmls
   // -------------------------------------------------------------------
   buildGuide: function(scope) {
-    var scope = scope.reversedArray();
     var menuObjects = com.mamuso.builder.getMenuElements(scope);
 
     // Loop through the pages to create the initial structure
@@ -56,6 +55,12 @@ com.mamuso.builder = {
 
         // Ignore all pages starting with "_"
         if(!page.name().hasPrefix("_")) {
+
+          // Set the first page
+          if(!com.mamuso.config.firstPage) {
+            com.mamuso.config.firstPage = com.mamuso.builder.getPagePath(page.name());
+          }
+
           pageVariables.title = page.name();
           pageVariables.artboards = [];
 
@@ -97,6 +102,9 @@ com.mamuso.builder = {
 
     // Set the CSS
     com.mamuso.builder.setCSS();
+
+    // Set the index Page
+    com.mamuso.builder.setIndex();
   },
 
   // -------------------------------------------------------------------
@@ -116,6 +124,21 @@ com.mamuso.builder = {
 
     mustacheTemplateContent.writeToFile_atomically_encoding_error(assetsPath.stringByAppendingPathComponent("style.css"), true, NSUTF8StringEncoding, null);
   },
+
+  // -------------------------------------------------------------------
+  // Set index.html file
+  // -------------------------------------------------------------------
+  setIndex: function() {
+    var pageVariables = {
+      page: com.mamuso.config.firstPage
+    };
+    var indexTemplatePath = com.mamuso.config.templatePath.stringByAppendingPathComponent("Index.mustache");
+    var mustacheTemplate = [GRMustacheTemplate templateFromContentsOfFile:indexTemplatePath error:null];
+    var mustacheTemplateContent = [mustacheTemplate renderObject:pageVariables error:null];
+
+    mustacheTemplateContent.writeToFile_atomically_encoding_error(com.mamuso.config.basePath.stringByAppendingPathComponent("index.html"), true, NSUTF8StringEncoding, null);
+  },
+
 
   // -------------------------------------------------------------------
   // Get Menu Objects
