@@ -22,7 +22,7 @@ com.mamuso.builder = {
 
       // Check if we have a logo, we will export it later
       var logo = com.mamuso.tools.findObjectsByName("_logo", layers);
-      com.mamuso.config.logo = (logo.count() > 0) ? true : false;
+      com.mamuso.config.logo = (logo.count() > 0) ? "true" : "";
     }
   },
 
@@ -39,6 +39,7 @@ com.mamuso.builder = {
       var artboards = page.artboards().reversedArray();
       var pageVariables = {};
       pageVariables.menu = menuObjects;
+      pageVariables.logo = com.mamuso.config.logo;
 
       // Changing page, or we will not export a damn thing
       com.mamuso.config.doc.setCurrentPage(page);
@@ -48,7 +49,7 @@ com.mamuso.builder = {
 
         // export the logo
         logo = com.mamuso.tools.findObjectsByName("_logo", artboards).firstObject();
-        logoFilename = com.mamuso.config.basePath.stringByAppendingPathComponent("img/logo.png");
+        logoFilename = com.mamuso.config.basePath.stringByAppendingPathComponent("img/_logo.png");
         com.mamuso.tools.sliceAndExport(logo, logoFilename);
       
       } else {
