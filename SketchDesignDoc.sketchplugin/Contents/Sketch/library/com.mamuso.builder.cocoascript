@@ -118,7 +118,10 @@ com.mamuso.builder = {
       NSFileManager.defaultManager().createDirectoryAtPath_withIntermediateDirectories_attributes_error(assetsPath, false, null, null);
     }
  
-    var cssVariables = {};
+    var cssVariables = {
+      primary: com.mamuso.config.primary,
+      secondary: com.mamuso.config.secondary
+    };
     var cssTemplatePath = com.mamuso.config.templatePath.stringByAppendingPathComponent("CSSMain.mustache");
     var mustacheTemplate = [GRMustacheTemplate templateFromContentsOfFile:cssTemplatePath error:null];
     var mustacheTemplateContent = [mustacheTemplate renderObject:cssVariables error:null];
