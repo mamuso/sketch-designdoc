@@ -49,7 +49,7 @@ com.mamuso.builder = {
 
         // export the logo
         logo = com.mamuso.tools.findObjectsByName("_logo", artboards).firstObject();
-        logoFilename = com.mamuso.config.basePath.stringByAppendingPathComponent("img/_logo.png");
+        logoFilename = com.mamuso.config.basePath.stringByAppendingPathComponent("assets/logo.png");
         com.mamuso.tools.sliceAndExport(logo, logoFilename);
       
       } else {
