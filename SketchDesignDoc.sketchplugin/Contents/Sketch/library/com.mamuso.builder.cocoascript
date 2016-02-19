@@ -63,7 +63,14 @@ com.mamuso.builder = {
           }
 
           pageVariables.title = page.name();
+          pageVariables.active = com.mamuso.builder.getArtboardId(page.name(), page.name());
           pageVariables.artboards = [];
+
+          // Do we have a preface?
+          prefaceLayer = com.mamuso.tools.findObjectsByName("_preface", layers).firstObject();
+          if(prefaceLayer && prefaceLayer.class() == "MSTextLayer"){
+            pageVariables.preface = com.mamuso.tools.markdownToHTML(prefaceLayer.stringValue());
+          }
 
           // Loop through the artboards of the page
           for (var j=0; j<artboards.count(); j++) {
@@ -170,6 +177,7 @@ com.mamuso.builder = {
 
         objects.push({
           name: page.name(),
+          id: com.mamuso.builder.getArtboardId(page.name(), page.name()),
           url: pagePath,
           artboards: subobjects
         });

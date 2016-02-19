@@ -1,26 +1,111 @@
 {{> cssnormalize }}
 
 body {
+  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
   margin: 0 0 0 250px;
 }
 
-header#main {
-  background: {{ primary }};
-  color: #FFFFFF;
-}
-  header#main h1 {
-    margin: 0;
-  }
 
+/* Elements
+------------------------------------------------------------------------------------ */
+h1 {
+  font-size: 42px;
+  line-height: 48px;
+  font-weight: normal;
+  letter-spacing: -1px;
+  margin: 0;
+  color: #495361;
+}
+
+.retina-image{
+    zoom: 50%;
+}
+
+/* Content
+------------------------------------------------------------------------------------ */
+article#content {
+  display: block;
+  margin: 45px 60px 60px; 
+  font-size: 14px;
+  line-height: 20px;
+}
+
+/* Header
+------------------------------------------------------------------------------------ */
+header#main {}
+header#main .preface {
+  display: block;
+  max-width: 600px;
+  font-size: 16px;
+  line-height: 20px;
+  margin-top: -13px;
+  color: #646D7A;
+}
+
+/* Artboards
+------------------------------------------------------------------------------------ */
+.artboard {
+  margin: 52px 0 68px 0;
+}
+  .artboard h2 {
+    font-size: 20px;
+    line-height: 24px;
+    font-weight: normal;
+    margin: 0;
+    padding-bottom: 4px;
+    max-width: 600px;
+    color: #495361;
+    border-bottom: 1px solid #ECEDF0;
+  }
+  .artboard .image { margin-top: 16px; }
+  .artboard .content { max-width: 600px; }
+
+/* Navigation
+------------------------------------------------------------------------------------ */
 nav#main-nav {
   position: fixed;
   width: 250px;
   top: 0;
   left: 0;
   bottom: 0;
-  background: #FFFFFF;
+  background: {{ primary }};
 }
 
-.retina-image{
-    zoom: 50%;
-}
+ nav#main-nav .logo {
+    display: block;
+    padding: 24px 24px 8px;
+  }
+    nav#main-nav .logo img {
+      height: 24px;
+    }
+
+  nav#main-nav ul, nav#main-nav ol {
+    margin: 0;
+    padding: 0; 
+    list-style: none;
+  }
+    nav#main-nav li { opacity: 0.6; }
+    nav#main-nav li.active { opacity: 1; margin-bottom: 6px; }
+    nav#main-nav li.active li { opacity: 1; }
+    nav#main-nav ul li a {
+      display: block;
+      font-size: 16px;
+      line-height: 16px;
+      padding: 11px 24px 9px 24px; 
+      color: #FFFFFF;
+      text-decoration: none;
+    }
+    nav#main-nav ul li a:hover {
+      background-color: rgba(0, 0, 0, 0.05);
+    }
+    nav#main-nav ol { margin-top: -2px; display: none; }
+    nav#main-nav li.active ol { display: block; }
+    nav#main-nav ol li { margin-bottom: 0; }
+    nav#main-nav ol li a {
+      font-size: 13px;
+      padding: 4px 24px 4px 24px;
+      margin: -2px 0;
+    }
+
+
+

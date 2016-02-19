@@ -6,13 +6,16 @@
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-  <title>{{ pageTitle }}</title>
+  <title>{{ title }}</title>
+  {{> pagejavascript }}
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <link href="assets/style.css" media="all" rel="stylesheet" />
 </head>
-<body>
-  {{> title }}
+<body data-active="{{ active }}">
   {{> navigation }}
-  {{> artboard }}  
+  <article id="content">
+    {{> title }}
+    {{> artboard }}
+  </article>
 </body>
 </html>

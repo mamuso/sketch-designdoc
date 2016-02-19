@@ -1,17 +1,17 @@
 {{# artboards }}
-<article id="{{ id }}">
+<section class="artboard" id="{{ id }}">
   {{# title.length }}
   <header>
     <h2>{{ title }}</h2>
   </header>
   {{/ title.length }}
+  <section class="image">
+    <img src="{{ image }}" class="retina-image">
+  </section>
   {{# text.length }}
   <section class="content">
     {{{ text }}}
   </section>
   {{/ text.length }}
-  <section class="image">
-    <img src="{{ image }}" class="retina-image">
-  </section>
-</article>
+</section>
 {{/ artboards }}

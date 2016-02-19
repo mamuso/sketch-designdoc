@@ -1,0 +1,9 @@
+<script type="text/javascript">
+  window.onload = function() {
+    var active = document.getElementsByTagName('body')[0];
+    if(active.dataset.active) {
+      var activeMenu = document.getElementById(active.dataset.active);
+      activeMenu.classList.add("active");
+    }
+  }
+</script>
