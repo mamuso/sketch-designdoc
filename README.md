@@ -1,4 +1,4 @@
-# sketch-designdoc
+# sketch-designdoc :cat::dog:
 
 I'm going to need to write a lot here
 
