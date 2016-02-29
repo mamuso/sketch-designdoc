@@ -77,6 +77,7 @@ com.mamuso.builder = {
             var artboard = artboards[j];
             var artboardTitle = artboard.name().hasPrefix("_") ? "" : artboard.name();
             var artboardId = com.mamuso.builder.getArtboardId(page.name(), artboard.name());
+            var artboardHtmlText = "";
 
             // Export the image
             filename = artboardId + ".png";
