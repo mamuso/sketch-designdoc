@@ -1,9 +1,18 @@
 <script type="text/javascript">
   window.onload = function() {
+    // Active menu section
     var active = document.getElementsByTagName('body')[0];
     if(active.dataset.active) {
       var activeMenu = document.getElementById(active.dataset.active);
       activeMenu.classList.add("active");
+    }
+
+    // Hide images if they are 1px height
+    var guideImages = document.getElementsByClassName('guide-image');
+    for(i=0; i<guideImages.length; i++) {
+      if(guideImages[i].clientHeight <= 2) {
+        guideImages[i].parentNode.classList.add("hide");
+      }
     }
   }
 </script>
