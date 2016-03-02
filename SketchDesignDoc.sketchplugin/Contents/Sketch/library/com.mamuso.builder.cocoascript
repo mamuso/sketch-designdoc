@@ -76,6 +76,13 @@ com.mamuso.builder = {
           for (var j=0; j<artboards.count(); j++) {
             var artboard = artboards[j];
             var artboardTitle = artboard.name().hasPrefix("_") ? "" : artboard.name();
+            var artboardTitleLevel = 2;
+
+            if(artboard.name().hasPrefix("/") && artboard.name().length() > 1) {
+              log("wadus")
+              artboardTitleLevel = 3;
+              artboardTitle = artboard.name().substringFromIndex(1);
+            }
             var artboardId = com.mamuso.builder.getArtboardId(page.name(), artboard.name());
             var artboardHtmlText = "";
 
@@ -93,6 +100,7 @@ com.mamuso.builder = {
             pageVariables.artboards.push({
               id: artboardId,
               title: artboardTitle,
+              titlelevel: artboardTitleLevel,
               text: artboardHtmlText,
               image: "img/" + filename
             })
@@ -168,9 +176,18 @@ com.mamuso.builder = {
         for (var j=0; j<artboards.count(); j++) {
           var artboard = artboards[j];
           if(!artboard.name().hasPrefix("_")) {
+
+            var artboardTitle = artboard.name();
+            var classname = "";
+            if(artboard.name().hasPrefix("/") && artboard.name().length() > 1) {
+              classname = "sub";
+              artboardTitle = artboard.name().substringFromIndex(1);
+            }
+
             var artboardId = com.mamuso.builder.getArtboardId(page.name(), artboard.name());
             subobjects.push({
-              name: artboard.name(),
+              name: artboardTitle,
+              classname: classname,
               url: pagePath + "#" + artboardId
             });
           }
