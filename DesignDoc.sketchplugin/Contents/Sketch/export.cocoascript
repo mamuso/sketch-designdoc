@@ -4,7 +4,6 @@
 @import 'library/io.mamuso.builder.cocoascript';
 
 var onRun = function(context) {
-
   try {
 
     // Let's catch all the context variables we need
@@ -20,12 +19,13 @@ var onRun = function(context) {
     io.mamuso.tools.loadFramework(frameworksPath, "JRSwizzle");
     io.mamuso.tools.loadFramework(frameworksPath, "GRMustache");
 
-    // Sa
+    // Sandboxing (maybe not needed anymore)
     new AppSandbox().authorize(homeFolder, function() {
       io.mamuso.config.doc = doc;
       io.mamuso.config.basePath = io.mamuso.tools.getDirFromPrompt();
 
-      if (io.mamuso.config.basePath == null) {
+      // Were are we saving the files?
+      if(io.mamuso.config.basePath == null) {
         return;
       } else {
         io.mamuso.config.basePath = io.mamuso.config.basePath.stringByAppendingPathComponent(io.mamuso.config.guidePath);

@@ -46,7 +46,7 @@ io.mamuso.builder = {
       io.mamuso.config.doc.setCurrentPage(page);
 
       // Special case for settings
-      if(page.name() == "_settings" && io.mamuso.config.logo) {
+      if(page.name() == "_Settings" && io.mamuso.config.logo) {
 
         // export the logo
         logo = io.mamuso.tools.findObjectsByName("_logo", artboards).firstObject();
@@ -56,7 +56,7 @@ io.mamuso.builder = {
       } else {
 
         // Ignore all pages starting with "_"
-        if(!page.name().hasPrefix("_")) {
+        if(!page.name().hasPrefix("_") && page.name() != "Symbols") {
 
           // Set the first page
           if(!io.mamuso.config.firstPage) {
@@ -68,7 +68,7 @@ io.mamuso.builder = {
           pageVariables.artboards = [];
 
           // Do we have a preface?
-          prefaceLayer = io.mamuso.tools.findObjectsByName("_preface", layers).firstObject();
+          prefaceLayer = io.mamuso.tools.findObjectsByName("_preface.md", layers).firstObject();
           if(prefaceLayer && prefaceLayer.class() == "MSTextLayer"){
             pageVariables.preface = io.mamuso.tools.markdownToHTML(prefaceLayer.stringValue());
           }
@@ -80,7 +80,6 @@ io.mamuso.builder = {
             var artboardTitleLevel = 2;
 
             if(artboard.name().hasPrefix("/") && artboard.name().length() > 1) {
-              log("wadus")
               artboardTitleLevel = 3;
               artboardTitle = artboard.name().substringFromIndex(1);
             }
@@ -93,7 +92,7 @@ io.mamuso.builder = {
             io.mamuso.tools.sliceAndExport(artboard, filePath);
 
             // Try to find the text layer
-            var artboardText = io.mamuso.tools.findObjectsByName(artboard.name() + "_bodytext", layers).firstObject();
+            var artboardText = io.mamuso.tools.findObjectsByName(artboard.name() + ".md", layers).firstObject();
             if(artboardText && artboardText.class() == "MSTextLayer"){
               artboardHtmlText = io.mamuso.tools.markdownToHTML(artboardText.stringValue());
             }
@@ -169,7 +168,7 @@ io.mamuso.builder = {
 
     for (var i=0; i<pages.count(); i++) {
       var page = pages[i];
-      if(!page.name().hasPrefix("_")) {
+      if(!page.name().hasPrefix("_") && page.name() != "Symbols") {
         var subobjects = [];
         var pagePath = io.mamuso.builder.getPagePath(page.name());
         var artboards = page.artboards().reversedArray();

@@ -4,6 +4,6 @@ io.mamuso = io.mamuso ? io.mamuso : {};
 io.mamuso.config = {
   guidePath: "designdoc",   // Name of the folder we are going to create
   scale: "2.0",             // Scale of the images we are going to export
-  primary: "#333333",       // Color for headers
+  primary: "#2E2D4B",       // Color for headers
   secondary: "#FFFFFF"      // Color for accents
 };

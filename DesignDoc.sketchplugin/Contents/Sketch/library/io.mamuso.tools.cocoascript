@@ -2,6 +2,7 @@ var io = io ? io : {};
 io.mamuso = io.mamuso ? io.mamuso : {};
 
 io.mamuso.tools = {
+  
   // -------------------------------------------------------------------
   // Find an object by name in a given scope
   // -------------------------------------------------------------------
