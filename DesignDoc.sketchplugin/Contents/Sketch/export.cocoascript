@@ -1,0 +1,49 @@
+@import 'library/sandbox.js';
+@import 'library/io.mamuso.config.cocoascript';
+@import 'library/io.mamuso.tools.cocoascript';
+@import 'library/io.mamuso.builder.cocoascript';
+
+var onRun = function(context) {
+
+  try {
+
+    // Let's catch all the context variables we need
+    var doc = context.document,
+        currentPage = doc.currentPage(),
+        pages = doc.pages(),
+        scriptPath = context.scriptPath,
+        frameworksPath = scriptPath.stringByDeletingLastPathComponent().stringByAppendingPathComponent("frameworks"),
+        homeFolder = "/Users/" + NSUserName();
+
+    // Load Frameworks
+    io.mamuso.tools.loadFramework(frameworksPath, "MMMarkdown");
+    io.mamuso.tools.loadFramework(frameworksPath, "JRSwizzle");
+    io.mamuso.tools.loadFramework(frameworksPath, "GRMustache");
+
+    // Sa
+    new AppSandbox().authorize(homeFolder, function() {
+      io.mamuso.config.doc = doc;
+      io.mamuso.config.basePath = io.mamuso.tools.getDirFromPrompt();
+
+      if (io.mamuso.config.basePath == null) {
+        return;
+      } else {
+        io.mamuso.config.basePath = io.mamuso.config.basePath.stringByAppendingPathComponent(io.mamuso.config.guidePath);
+        io.mamuso.config.templatePath = scriptPath.stringByDeletingLastPathComponent().stringByAppendingPathComponent("templates"); 
+
+        // Parsing the settings page if exist
+        io.mamuso.builder.readSettings(pages);
+    
+        // Let's loop!
+        io.mamuso.builder.buildGuide(pages);
+      }
+    });
+
+    // back to the page you were
+    doc.setCurrentPage(currentPage);
+
+  } catch (e) {
+    NSApplication.sharedApplication().displayDialog_withTitle_(e, "Something went 💩");
+  }
+
+};

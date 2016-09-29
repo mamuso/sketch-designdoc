@@ -1,28 +1,29 @@
-var com = com ? com : {};
-com.mamuso = com.mamuso ? com.mamuso : {};
+var io = io ? io : {};
+io.mamuso = io.mamuso ? io.mamuso : {};
 
-com.mamuso.builder = {
+io.mamuso.builder = {
+
   // -------------------------------------------------------------------
   // Read the settings page
   // -------------------------------------------------------------------
   readSettings: function(scope) {
-    var settingsPage = com.mamuso.tools.findObjectsByName("_settings", scope);
+    var settingsPage = io.mamuso.tools.findObjectsByName("_Settings", scope);
   
     if(settingsPage.count() == 1) {
       var page = settingsPage.firstObject(),
       layers = page.children();
 
       // Check if we have defined a primary color
-      var primary = com.mamuso.tools.getColor(com.mamuso.tools.findObjectsByName("_primary", layers).firstObject());
-      if (primary) { com.mamuso.config.primary = primary; }
+      var primary = io.mamuso.tools.getColor(io.mamuso.tools.findObjectsByName("_primary", layers).firstObject());
+      if (primary) { io.mamuso.config.primary = primary; }
 
       // Check if we have defined a secondary color
-      var secondary = com.mamuso.tools.getColor(com.mamuso.tools.findObjectsByName("_secondary", layers).firstObject());
-      if (secondary) { com.mamuso.config.secondary = secondary; }
+      var secondary = io.mamuso.tools.getColor(io.mamuso.tools.findObjectsByName("_secondary", layers).firstObject());
+      if (secondary) { io.mamuso.config.secondary = secondary; }
 
       // Check if we have a logo, we will export it later
-      var logo = com.mamuso.tools.findObjectsByName("_logo", layers);
-      com.mamuso.config.logo = (logo.count() > 0) ? "true" : "";
+      var logo = io.mamuso.tools.findObjectsByName("_logo", layers);
+      io.mamuso.config.logo = (logo.count() > 0) ? "true" : "";
     }
   },
 
@@ -30,7 +31,7 @@ com.mamuso.builder = {
   // Export images and htmls
   // -------------------------------------------------------------------
   buildGuide: function(scope) {
-    var menuObjects = com.mamuso.builder.getMenuElements(scope);
+    var menuObjects = io.mamuso.builder.getMenuElements(scope);
 
     // Loop through the pages to create the initial structure
     for (var i=0; i<scope.count(); i++) {
@@ -39,18 +40,18 @@ com.mamuso.builder = {
       var artboards = page.artboards().reversedArray();
       var pageVariables = {};
       pageVariables.menu = menuObjects;
-      pageVariables.logo = com.mamuso.config.logo;
+      pageVariables.logo = io.mamuso.config.logo;
 
       // Changing page, or we will not export a damn thing
-      com.mamuso.config.doc.setCurrentPage(page);
+      io.mamuso.config.doc.setCurrentPage(page);
 
       // Special case for settings
-      if(page.name() == "_settings" && com.mamuso.config.logo) {
+      if(page.name() == "_settings" && io.mamuso.config.logo) {
 
         // export the logo
-        logo = com.mamuso.tools.findObjectsByName("_logo", artboards).firstObject();
-        logoFilename = com.mamuso.config.basePath.stringByAppendingPathComponent("assets/logo.png");
-        com.mamuso.tools.sliceAndExport(logo, logoFilename);
+        logo = io.mamuso.tools.findObjectsByName("_logo", artboards).firstObject();
+        logoFilename = io.mamuso.config.basePath.stringByAppendingPathComponent("assets/logo.png");
+        io.mamuso.tools.sliceAndExport(logo, logoFilename);
       
       } else {
 
@@ -58,18 +59,18 @@ com.mamuso.builder = {
         if(!page.name().hasPrefix("_")) {
 
           // Set the first page
-          if(!com.mamuso.config.firstPage) {
-            com.mamuso.config.firstPage = com.mamuso.builder.getPagePath(page.name());
+          if(!io.mamuso.config.firstPage) {
+            io.mamuso.config.firstPage = io.mamuso.builder.getPagePath(page.name());
           }
 
           pageVariables.title = page.name();
-          pageVariables.active = com.mamuso.builder.getArtboardId(page.name(), page.name());
+          pageVariables.active = io.mamuso.builder.getArtboardId(page.name(), page.name());
           pageVariables.artboards = [];
 
           // Do we have a preface?
-          prefaceLayer = com.mamuso.tools.findObjectsByName("_preface", layers).firstObject();
+          prefaceLayer = io.mamuso.tools.findObjectsByName("_preface", layers).firstObject();
           if(prefaceLayer && prefaceLayer.class() == "MSTextLayer"){
-            pageVariables.preface = com.mamuso.tools.markdownToHTML(prefaceLayer.stringValue());
+            pageVariables.preface = io.mamuso.tools.markdownToHTML(prefaceLayer.stringValue());
           }
 
           // Loop through the artboards of the page
@@ -83,18 +84,18 @@ com.mamuso.builder = {
               artboardTitleLevel = 3;
               artboardTitle = artboard.name().substringFromIndex(1);
             }
-            var artboardId = com.mamuso.builder.getArtboardId(page.name(), artboard.name());
+            var artboardId = io.mamuso.builder.getArtboardId(page.name(), artboard.name());
             var artboardHtmlText = "";
 
             // Export the image
             filename = artboardId + ".png";
-            filePath = com.mamuso.config.basePath.stringByAppendingPathComponent("img").stringByAppendingPathComponent(filename);
-            com.mamuso.tools.sliceAndExport(artboard, filePath);
+            filePath = io.mamuso.config.basePath.stringByAppendingPathComponent("img").stringByAppendingPathComponent(filename);
+            io.mamuso.tools.sliceAndExport(artboard, filePath);
 
             // Try to find the text layer
-            var artboardText = com.mamuso.tools.findObjectsByName(artboard.name() + "_bodytext", layers).firstObject();
+            var artboardText = io.mamuso.tools.findObjectsByName(artboard.name() + "_bodytext", layers).firstObject();
             if(artboardText && artboardText.class() == "MSTextLayer"){
-              artboardHtmlText = com.mamuso.tools.markdownToHTML(artboardText.stringValue());
+              artboardHtmlText = io.mamuso.tools.markdownToHTML(artboardText.stringValue());
             }
 
             pageVariables.artboards.push({
@@ -107,38 +108,38 @@ com.mamuso.builder = {
           }
 
           // Let's writhe the htmls :)
-          var pageTemplatePath = com.mamuso.config.templatePath.stringByAppendingPathComponent("Page.mustache");
-          var htmlName = com.mamuso.builder.getPagePath(page.name());
+          var pageTemplatePath = io.mamuso.config.templatePath.stringByAppendingPathComponent("Page.mustache");
+          var htmlName = io.mamuso.builder.getPagePath(page.name());
           var mustacheTemplate = [GRMustacheTemplate templateFromContentsOfFile:pageTemplatePath error:null];
           var mustacheTemplateContent = [mustacheTemplate renderObject:pageVariables error:null];
           
-          mustacheTemplateContent.writeToFile_atomically_encoding_error(com.mamuso.config.basePath.stringByAppendingPathComponent(htmlName), true, NSUTF8StringEncoding, null);
+          mustacheTemplateContent.writeToFile_atomically_encoding_error(io.mamuso.config.basePath.stringByAppendingPathComponent(htmlName), true, NSUTF8StringEncoding, null);
         }
       }
     }
 
     // Set the CSS
-    com.mamuso.builder.setCSS();
+    io.mamuso.builder.setCSS();
 
     // Set the index Page
-    com.mamuso.builder.setIndex();
+    io.mamuso.builder.setIndex();
   },
 
   // -------------------------------------------------------------------
   // Set CSS file
   // -------------------------------------------------------------------
   setCSS: function() {
-    var assetsPath = com.mamuso.config.basePath.stringByAppendingPathComponent("assets");
+    var assetsPath = io.mamuso.config.basePath.stringByAppendingPathComponent("assets");
 
     if(!NSFileManager.defaultManager().fileExistsAtPath(assetsPath)){
       NSFileManager.defaultManager().createDirectoryAtPath_withIntermediateDirectories_attributes_error(assetsPath, false, null, null);
     }
  
     var cssVariables = {
-      primary: com.mamuso.config.primary,
-      secondary: com.mamuso.config.secondary
+      primary: io.mamuso.config.primary,
+      secondary: io.mamuso.config.secondary
     };
-    var cssTemplatePath = com.mamuso.config.templatePath.stringByAppendingPathComponent("CSSMain.mustache");
+    var cssTemplatePath = io.mamuso.config.templatePath.stringByAppendingPathComponent("CSSMain.mustache");
     var mustacheTemplate = [GRMustacheTemplate templateFromContentsOfFile:cssTemplatePath error:null];
     var mustacheTemplateContent = [mustacheTemplate renderObject:cssVariables error:null];
 
@@ -150,13 +151,13 @@ com.mamuso.builder = {
   // -------------------------------------------------------------------
   setIndex: function() {
     var pageVariables = {
-      page: com.mamuso.config.firstPage
+      page: io.mamuso.config.firstPage
     };
-    var indexTemplatePath = com.mamuso.config.templatePath.stringByAppendingPathComponent("Index.mustache");
+    var indexTemplatePath = io.mamuso.config.templatePath.stringByAppendingPathComponent("Index.mustache");
     var mustacheTemplate = [GRMustacheTemplate templateFromContentsOfFile:indexTemplatePath error:null];
     var mustacheTemplateContent = [mustacheTemplate renderObject:pageVariables error:null];
 
-    mustacheTemplateContent.writeToFile_atomically_encoding_error(com.mamuso.config.basePath.stringByAppendingPathComponent("index.html"), true, NSUTF8StringEncoding, null);
+    mustacheTemplateContent.writeToFile_atomically_encoding_error(io.mamuso.config.basePath.stringByAppendingPathComponent("index.html"), true, NSUTF8StringEncoding, null);
   },
 
 
@@ -170,7 +171,7 @@ com.mamuso.builder = {
       var page = pages[i];
       if(!page.name().hasPrefix("_")) {
         var subobjects = [];
-        var pagePath = com.mamuso.builder.getPagePath(page.name());
+        var pagePath = io.mamuso.builder.getPagePath(page.name());
         var artboards = page.artboards().reversedArray();
 
         for (var j=0; j<artboards.count(); j++) {
@@ -184,7 +185,7 @@ com.mamuso.builder = {
               artboardTitle = artboard.name().substringFromIndex(1);
             }
 
-            var artboardId = com.mamuso.builder.getArtboardId(page.name(), artboard.name());
+            var artboardId = io.mamuso.builder.getArtboardId(page.name(), artboard.name());
             subobjects.push({
               name: artboardTitle,
               classname: classname,
@@ -195,7 +196,7 @@ com.mamuso.builder = {
 
         objects.push({
           name: page.name(),
-          id: com.mamuso.builder.getArtboardId(page.name(), page.name()),
+          id: io.mamuso.builder.getArtboardId(page.name(), page.name()),
           url: pagePath,
           artboards: subobjects
         });

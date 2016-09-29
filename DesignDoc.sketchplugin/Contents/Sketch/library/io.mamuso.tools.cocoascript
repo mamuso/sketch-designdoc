@@ -1,7 +1,7 @@
-var com = com ? com : {};
-com.mamuso = com.mamuso ? com.mamuso : {};
+var io = io ? io : {};
+io.mamuso = io.mamuso ? io.mamuso : {};
 
-com.mamuso.tools = {
+io.mamuso.tools = {
   // -------------------------------------------------------------------
   // Find an object by name in a given scope
   // -------------------------------------------------------------------
@@ -37,8 +37,8 @@ com.mamuso.tools = {
   // -------------------------------------------------------------------
   sliceAndExport: function(obj, filename) {
     var rect = MSSliceTrimming.trimmedRectForSlice(obj),
-    slice = MSExportRequest.requestWithRect_scale(rect, com.mamuso.config.scale);
-    com.mamuso.config.doc.saveArtboardOrSlice_toFile(slice, filename);
+    slice = MSExportRequest.requestWithRect_scale(rect, io.mamuso.config.scale);
+    io.mamuso.config.doc.saveArtboardOrSlice_toFile(slice, filename);
   },
 
   // -------------------------------------------------------------------
@@ -50,7 +50,7 @@ com.mamuso.tools = {
     [panel setCanChooseDirectories: true];
     [panel setCanChooseFiles: false];
     [panel setCanCreateDirectories: true];
-    var defaultDir = com.mamuso.config.doc.fileURL().URLByDeletingLastPathComponent();
+    var defaultDir = io.mamuso.config.doc.fileURL().URLByDeletingLastPathComponent();
     [panel setDirectoryURL:defaultDir];
     if ([panel runModal] == NSOKButton) {
       var message = [panel filename];
