@@ -1,20 +1,16 @@
-# sketch-designdoc :cat::dog:
+# Sketch Design Doc :chicken::dog:
+This plugin exports a simple website using a bunch of conventions and the Sketch document as the structure. We named the plugin "design doc" because initially, we used it to export a design guideline, but we have been using it for many other things.
 
-This plugin exports a very simple website using the Sketch document to hold the structure, images and text of it.
+If you want to see an example, you can build [this website](http://mamuso.github.io/sketch-designdoc/Chicken/Chicken/) using this [Sketch file](https://github.com/mamuso/sketch-designdoc/raw/master/examples/Chicken/Chicken.sketch) as a base.
 
-## Demo 
-You have a Sketch sample file [here](https://github.com/mamuso/sketch-designdoc/raw/master/sample_doc.sketch), and a demo of the exported site [here](https://dl.dropboxusercontent.com/u/8274/designdoc/index.html).
+## How to Install
+1. Download and open [```sketch-designdoc-master.zip```](https://github.com/mamuso/sketch-designdoc/archive/master.zip)
+2. Open ```DesignDoc.sketchplugin```
+3. Done! :dancer:
+
+## How it works
 
 ## TODOs and Known Issues
-- The current website template is pretty bad.
-- The plugin and the output need a more intensive test. 
-
-## Settings
-
-## Document Structure
-
-## Exporting
-
-## Do you have suggestions?
+- The output is not mobile friendly (yet)
 
 
