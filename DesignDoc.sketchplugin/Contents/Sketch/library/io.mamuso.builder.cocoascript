@@ -68,7 +68,7 @@ io.mamuso.builder = {
           pageVariables.artboards = [];
 
           // Do we have a preface?
-          prefaceLayer = io.mamuso.tools.findObjectsByName("_preface.md", layers).firstObject();
+          prefaceLayer = io.mamuso.tools.findObjectsByName("_Preface.md", layers).firstObject();
           if(prefaceLayer && prefaceLayer.class() == "MSTextLayer"){
             pageVariables.preface = io.mamuso.tools.markdownToHTML(prefaceLayer.stringValue());
           }
