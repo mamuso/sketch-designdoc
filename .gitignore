@@ -1,4 +1,5 @@
 designdoc
 guidelines
 node_modules
+.grunt
 .DS_Store
