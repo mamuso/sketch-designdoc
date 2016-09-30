@@ -9,6 +9,16 @@ If you want to see an example, you can build [this website](http://mamuso.github
 3. Done! :dancer:
 
 ## How it works
+The plugin scans the document and builds a page following these rules:
+
+### Pages => Menu
+The order of the pages is the order of the menu. The plugin generates a ```index.html``` page that redirects to the first element of the menu.
+
+![Pages to Menu](docs/assets/001-OrderPages.png)
+
+- The plugin ignores the "Symbols" page.
+- If the name of the page starts with an underscore "_" the plugin ignores the page.
+- "_Settings" is a special case.
 
 ## TODOs and Known Issues
 - The output is not mobile friendly (yet)
