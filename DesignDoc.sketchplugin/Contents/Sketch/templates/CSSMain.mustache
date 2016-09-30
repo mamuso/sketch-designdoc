@@ -10,7 +10,7 @@ li { margin-bottom: .4em; }
 
 .hide { display: none; }
 
-/* Elements
+/* Basics
 ------------------------------------------------------------------------------------ */
 
 a { color: {{ secondary }}; }
@@ -24,8 +24,24 @@ h1 {
   color: #495361;
 }
 
-.retina-image{
-    zoom: 50%;
+.retina-image { zoom: 50%; }
+
+table th { font-weight: bold; }
+table th, table td { 
+  border: 1px solid #ddd;
+  padding: 6px 13px;
+}
+table tr {
+    border-top: 1px solid #ccc;
+    background-color: #fff; 
+}
+table tr:nth-child(2n) { background-color: #f8f8f8; }
+
+blockquote {
+  border-left: 4px solid #DDD;
+  padding: 0 16px;
+  margin: 0;
+  color: #777;
 }
 
 /* Content
