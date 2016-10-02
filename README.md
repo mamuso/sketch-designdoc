@@ -14,13 +14,16 @@ The plugin scans the document and builds a page following these rules:
 ### Pages => Menu
 The order of the pages is the order of the menu. The plugin generates a ```index.html``` page that redirects to the first element of the menu.
 
-![Pages to Menu](docs/assets/001-OrderPages.png)
-
 - The plugin ignores the "Symbols" page.
 - If the name of the page starts with an underscore "_" the plugin ignores the page.
 - "_Settings" is a special case.
 
+![Pages to Menu](docs/assets/001-PagesMenu.png)
+
+### Artboards => Web structure
+
+![Artboards to Structure](docs/assets/002-ArtboardsStructure.png)
+
+
 ## TODOs and Known Issues
 - The output is not mobile friendly (yet)
-
-
