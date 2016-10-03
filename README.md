@@ -28,6 +28,10 @@ The order of the artboards in the panel defines the order of the content on the 
 
 ![Artboards to Structure](docs/assets/002-ArtboardsStructure.png)
 
+### Artboard Text
+Each artboard can have a text description associated. Create a text layer and name it [name-of-the-artboard].md. Use Markdown to format the output. The plugin will ignore the style applied to the layer.
+
+![Artboards Description](docs/assets/003-ArtboardText.png)
 
 ## TODOs and Known Issues
 - The output is not mobile friendly (yet)
