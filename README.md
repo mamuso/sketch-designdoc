@@ -18,7 +18,7 @@ The order of the pages in the panel is the order of the menu. The plugin generat
 - If the name of the page starts with an underscore ```_```, the plugin ignores the page.
 - ```_Settings``` is a special case.
 
-![Pages to Menu](docs/assets/001-PagesMenu.png)
+<img src="https://github.com/mamuso/sketch-designdoc/raw/master/docs/assets/001-PagesMenu.png" alt="Pages to Menu" width="560" style="max-width:100%;">
 
 ### Artboards 👉 Web Page Structure
 The order of the artboards in the panel defines the order of the content on the web page. 
@@ -26,17 +26,17 @@ The order of the artboards in the panel defines the order of the content on the 
 - If the name of the artboard starts with an underscore ```_```, the plugin doesn't generate a title for the section nor an entry on the menu.
 - If the name of the artboard starts with a slash ```/```, the plugin indents one level the content on the menu and generates a lighter header for the content.
 
-![Artboards to Structure](docs/assets/002-ArtboardsStructure.png)
+<img src="https://github.com/mamuso/sketch-designdoc/raw/master/docs/assets/002-ArtboardsStructure.png" alt="Artboards to Structure" width="560" style="max-width:100%;">
 
 ### Artboard Text
 Each artboard can have a text description associated. Create a text layer and name it ```[name-of-the-artboard].md```. Use Markdown to format the output. The plugin will ignore the style applied to the layer.
 
-![Artboards Description](docs/assets/003-ArtboardText.png)
+<img src="https://github.com/mamuso/sketch-designdoc/raw/master/docs/assets/003-ArtboardText.png" alt="Artboards Description" width="1875" style="max-width:100%;">
 
 ### Preface
 Creating a text layer named ```_Preface.md``` in a page, will render as an introduction at web page level. This text layer supports Markdown too.
 
-![Artboards Description](docs/assets/004-Preface.png)
+<img src="https://github.com/mamuso/sketch-designdoc/raw/master/docs/assets/004-Preface.png" alt="Preface" width="583" style="max-width:100%;">
 
 ### Settings
 Customize the logo of the output, the color of the menu and the color of the links in the page ```_Settings``` if needed. This page is not mandatory.
@@ -45,7 +45,7 @@ Customize the logo of the output, the color of the menu and the color of the lin
 - Customize the color of the menu using a vector layer with the name ```_primary```.
 - Customize the color of the links using a vector layer with the name ```_secondary```
 
-<img src="https://github.com/mamuso/sketch-designdoc/raw/master/docs/assets/005-Settings.png" alt="Artboards Description" width="520" style="max-width:100%;">
+<img src="https://github.com/mamuso/sketch-designdoc/raw/master/docs/assets/005-Settings.png" alt="Settings" width="520" style="max-width:100%;">
 
 ## TODOs and Known Issues
 - The output is not mobile friendly (yet)
