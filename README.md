@@ -45,7 +45,7 @@ Customize the logo of the output, the color of the menu and the color of the lin
 - Customize the color of the menu using a vector layer with the name ```_primary```.
 - Customize the color of the links using a vector layer with the name ```_secondary```
 
-<img src="/mamuso/sketch-designdoc/raw/master/docs/assets/005-Settings.png" alt="Artboards Description" style="width: 520px; max-width:100%;">
+<img src="https://github.com/mamuso/sketch-designdoc/raw/master/docs/assets/005-Settings.png" alt="Artboards Description" style="width: 520px; max-width:100%;">
 
 ## TODOs and Known Issues
 - The output is not mobile friendly (yet)
