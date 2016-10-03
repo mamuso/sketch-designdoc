@@ -12,18 +12,24 @@ If you want to see an example, you can build [this website](http://mamuso.github
 The plugin scans the document and builds a page following these rules:
 
 ### Pages => Menu
-The order of the pages is the order of the menu. The plugin generates a ```index.html``` page that redirects to the first element of the menu.
+The order of the pages in the panel is the order of the menu. The plugin generates a ```index.html``` page that redirects to the first element of the menu.
 
 - The plugin ignores the "Symbols" page.
-- If the name of the page starts with an underscore "_" the plugin ignores the page.
+- If the name of the page starts with an underscore "_", the plugin ignores the page.
 - "_Settings" is a special case.
 
 ![Pages to Menu](docs/assets/001-PagesMenu.png)
 
-### Artboards => Web structure
+### Artboards => Web Page Structure
+The order of the artboards in the panel defines the order of the content on the web page. 
+
+- If the name of the artboard starts with an underscore "_", the plugin doesn't generate a title for the section nor an entry on the menu.
+- If the name of the artboard starts with a slash "/", the plugin indents one level the content on the menu and generates a lighter header for the content.
 
 ![Artboards to Structure](docs/assets/002-ArtboardsStructure.png)
 
 
 ## TODOs and Known Issues
 - The output is not mobile friendly (yet)
+
+
