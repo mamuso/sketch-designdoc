@@ -3,7 +3,7 @@
   "description": "Build a website using a bunch of conventions and the Sketch document as the structure.",
   "author": "Manuel Muñoz Solera",
   "authorEmail": "mamuso@mamuso.net",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "identifier": "io.mamuso.sketch.designdoc",
   "commands": [{
     "name": "🐻 Export Design Doc",

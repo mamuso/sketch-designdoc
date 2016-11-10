@@ -34,12 +34,22 @@ io.mamuso.tools = {
   },
 
   // -------------------------------------------------------------------
-  // Make slice and export
+  // Make slice and export (CHECK DEPRECATIONS)
   // -------------------------------------------------------------------
   sliceAndExport: function(obj, filename) {
-    var rect = MSSliceTrimming.trimmedRectForSlice(obj),
+    var rect = MSSliceTrimming.trimmedRectForLayerAncestry(obj),
     slice = MSExportRequest.requestWithRect_scale(rect, io.mamuso.config.scale);
     io.mamuso.config.doc.saveArtboardOrSlice_toFile(slice, filename);
+  },
+
+  // -------------------------------------------------------------------
+  // Export artboard with global scale factor
+  // -------------------------------------------------------------------
+  exportArtboard: function(obj, filename) {
+    var slice = obj.duplicate();
+    slice.multiplyBy(io.mamuso.config.scale);
+    io.mamuso.config.doc.saveArtboardOrSlice_toFile(slice, filename);
+    slice.removeFromParent();
   },
 
   // -------------------------------------------------------------------

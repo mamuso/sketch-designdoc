@@ -51,8 +51,8 @@ io.mamuso.builder = {
         // export the logo
         logo = io.mamuso.tools.findObjectsByName("_logo", artboards).firstObject();
         logoFilename = io.mamuso.config.basePath.stringByAppendingPathComponent("assets/logo.png");
-        io.mamuso.tools.sliceAndExport(logo, logoFilename);
-      
+        // io.mamuso.tools.sliceAndExport(logo, logoFilename);
+        io.mamuso.tools.exportArtboard(logo, logoFilename);
       } else {
 
         // Ignore all pages starting with "_"
@@ -89,7 +89,8 @@ io.mamuso.builder = {
             // Export the image
             filename = artboardId + ".png";
             filePath = io.mamuso.config.basePath.stringByAppendingPathComponent("img").stringByAppendingPathComponent(filename);
-            io.mamuso.tools.sliceAndExport(artboard, filePath);
+            // io.mamuso.tools.sliceAndExport(artboard, filePath);
+            io.mamuso.tools.exportArtboard(artboard, filePath);
 
             // Try to find the text layer
             var artboardText = io.mamuso.tools.findObjectsByName(artboard.name() + ".md", layers).firstObject();
