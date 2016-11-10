@@ -48,6 +48,9 @@ io.mamuso.tools = {
   exportArtboard: function(obj, filename) {
     var slice = obj.duplicate();
     slice.multiplyBy(io.mamuso.config.scale);
+    // DIRTY HACK, clean ASAP
+    slice.frame().midX = -90000000000;
+    slice.frame().midY = -90000000000;     
     io.mamuso.config.doc.saveArtboardOrSlice_toFile(slice, filename);
     slice.removeFromParent();
   },
