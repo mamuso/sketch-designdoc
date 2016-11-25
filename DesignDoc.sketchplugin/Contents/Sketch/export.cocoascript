@@ -22,7 +22,6 @@ var onRun = function(context) {
     // Sandboxing (maybe not needed anymore)
     new AppSandbox().authorize(homeFolder, function() {
       io.mamuso.config.doc = doc;
-      io.mamuso.config.homeFolder = homeFolder;
       io.mamuso.config.basePath = io.mamuso.tools.getDirFromPrompt();
 
       // Were are we saving the files?
