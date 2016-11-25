@@ -64,8 +64,10 @@ io.mamuso.tools = {
     [panel setCanChooseDirectories: true];
     [panel setCanChooseFiles: false];
     [panel setCanCreateDirectories: true];
-    var defaultDir = io.mamuso.config.doc.fileURL().URLByDeletingLastPathComponent();
-    [panel setDirectoryURL:defaultDir];
+    if(io.mamuso.config.doc.fileURL()) {
+      var defaultDir = io.mamuso.config.doc.fileURL().URLByDeletingLastPathComponent();
+      [panel setDirectoryURL:defaultDir];
+    }
     if ([panel runModal] == NSOKButton) {
       var message = [panel filename];
       return message;

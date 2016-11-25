@@ -4,7 +4,7 @@
 @import 'library/io.mamuso.builder.cocoascript';
 
 var onRun = function(context) {
-  try {
+  // try {
 
     // Let's catch all the context variables we need
     var doc = context.document,
@@ -22,6 +22,7 @@ var onRun = function(context) {
     // Sandboxing (maybe not needed anymore)
     new AppSandbox().authorize(homeFolder, function() {
       io.mamuso.config.doc = doc;
+      io.mamuso.config.homeFolder = homeFolder;
       io.mamuso.config.basePath = io.mamuso.tools.getDirFromPrompt();
 
       // Were are we saving the files?
@@ -42,8 +43,8 @@ var onRun = function(context) {
     // back to the page you were
     doc.setCurrentPage(currentPage);
 
-  } catch (e) {
-    NSApplication.sharedApplication().displayDialog_withTitle_(e, "Something went 💩");
-  }
+  // } catch (e) {
+  //   NSApplication.sharedApplication().displayDialog_withTitle_(e, "Something went 💩");
+  // }
 
 };
