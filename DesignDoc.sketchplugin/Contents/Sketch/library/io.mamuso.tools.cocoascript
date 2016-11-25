@@ -34,25 +34,18 @@ io.mamuso.tools = {
   },
 
   // -------------------------------------------------------------------
-  // Make slice and export (CHECK DEPRECATIONS)
+  // Make slice and export
   // -------------------------------------------------------------------
   sliceAndExport: function(obj, filename) {
-    var rect = MSSliceTrimming.trimmedRectForLayerAncestry(obj),
-    slice = MSExportRequest.requestWithRect_scale(rect, io.mamuso.config.scale);
+    var sliceLayerAncestry = MSImmutableLayerAncestry.ancestryWithMSLayer(obj),
+    rect = MSSliceTrimming.trimmedRectForLayerAncestry(sliceLayerAncestry),
+    slices = MSExportRequest.exportRequestsFromExportableLayer_inRect_useIDForName(obj, rect, false),
+    slice = null;
+    if (slices.count() > 0) {
+      slice = slices[0];
+      slice.scale = io.mamuso.config.scale;
+    }
     io.mamuso.config.doc.saveArtboardOrSlice_toFile(slice, filename);
-  },
-
-  // -------------------------------------------------------------------
-  // Export artboard with global scale factor
-  // -------------------------------------------------------------------
-  exportArtboard: function(obj, filename) {
-    var slice = obj.duplicate();
-    slice.multiplyBy(io.mamuso.config.scale);
-    // DIRTY HACK, clean ASAP
-    slice.frame().midX = -90000000000;
-    slice.frame().midY = -90000000000;     
-    io.mamuso.config.doc.saveArtboardOrSlice_toFile(slice, filename);
-    slice.removeFromParent();
   },
 
   // -------------------------------------------------------------------
