@@ -26,7 +26,7 @@ io.mamuso.tools = {
     try{
       var fills = object.style().fills();
       if (fills.count() > 0 && fills.firstObject().fillType() == 0) { 
-        return "#" + fills.firstObject().color().hexValue().toString();
+        return "#" + fills.firstObject().color().immutableModelObject().hexValue().toString();
       }
     } catch (e) {
       return nil;
